@@ -1,0 +1,1297 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><link type="text/css" rel="stylesheet" media="screen" href="https://www.uhaul.com/uhaul.css" /><link type="text/css" rel="Stylesheet" href="/Content/site.css" /><link type="text/css" rel="Stylesheet" media="screen" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/smoothness/jquery-ui.css" />
+    <style type="text/css">
+        #ui-datepicker-div
+        {
+            display: none;
+        }
+
+        #loadIconOverlay
+        {
+            /*display: none;*/
+        }
+
+        .loadingSpinner
+        {
+            display: none;
+        }
+    </style>
+    <!-- IE6-specific fixes -->
+    <!--[if IE 6]>
+        <script type="text/javascript" src="https://www.uhaul.com/javascript/png_fix.js" language="javascript"></script>
+    <![endif]-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.replacetext.min.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="/scripts/underscore.js"></script>
+    <script type="text/javascript" src="/scripts/LoadingOverlay.js"></script>
+    
+    
+<script type="text/javascript" src="/Scripts/jquery.qtip-1.0.0-rc3.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('[tip]').each(function (i, obj) {
+            $(this).attr('tabindex', '999');
+            var tip = $(this).attr('tip');
+            $(obj).qtip(
+                {
+                    content: tip,
+                    show: 'mouseover',
+                    hide: 'mouseout',
+                    style:
+                    {
+                        border: { width: 2, radius: 6 },
+                        name: 'light',
+                        tip: true
+                    },
+                    position:
+                    {
+                        corner: { target: 'topRight', tooltip: 'bottomLeft' }
+                    }
+                }).click(function () { return false; });
+        });
+    });
+</script>
+
+
+<script src="/urchin.js" type="text/javascript"></script>
+<script type="text/javascript">
+    _userv = 0;
+    urchinTracker();
+</script>
+
+    <script type='text/javascript'>__utmTrackEvent('Footer Social', 'Follow us on Facebook', 'Viewed');</script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.data_table').not('.no_sort').tablesorter(
+                {
+                    widgets: ['zebra'],
+                    cssChildRow: 'child',
+                    cssHeader: 'sort',
+                    cssAsc: 'sort up sort_active',
+                    cssDesc: 'sort down sort_active',
+                    widgetZebra: { css: ['alternating_row', ''] },
+                    textExtraction: function (element) {
+                        var result = $('.sort', $(element)).text();
+                        result = result || $(element).text();
+                        return result;
+                    }
+                });
+
+            $('.data_table thead th:first').click();
+            $('.data_table thead th.default_sort').click();
+            $('input[type="text"]').attr('autocomplete', 'off');
+            $('#warnings').draggable({
+                cursor: 'move',
+                stop: function () {
+                    $.cookie('warnings-top', $(this).position().top);
+                    $.cookie('warnings-left', $(this).position().left);
+                }
+            });
+            if ($.cookie('warnings-top')) {
+                $('#warnings').css('top', $.cookie('warnings-top') + 'px');
+            }
+            if ($.cookie('warnings-left')) {
+                $('#warnings').css('left', $.cookie('warnings-left') + 'px');
+            }
+            destroyOverlay();
+
+            $('form[data-overlay], form[data_overlay]').submit(function () {
+                var message = $(this).attr('data-overlay') || $(this).attr('data_overlay');
+                createOverlay('.content_wrapper', message);
+            });
+
+            $("body *").replaceText(/U-Notes(?!®)/gi, 'U-Notes®');
+            $("body *").replaceText(/U-Note(?!(s®)|(®))/gi, 'U-Note®');
+            $("body *").replaceText(/U-Haul Investors Club(?!®)/gi, 'U-Haul Investors Club®');
+            $("body *").replaceText(/®/gi, '<small style="text-decoration: none !important;"><sup>&reg;</sup></small>');
+        });
+
+        function openCompleteLegalTermsPopup() {
+            var url = '/Legal';
+            return openPopup(url);
+        }
+
+        function openPopup(url) {
+            window.open(url, '', "status = 1, height = 480, width = 640, resizable = 0, scrollbars = 1");
+            return false;
+        }
+    </script>
+    
+    <style type="text/css">
+        #bankAccountView_accountInformation_fieldSet {
+            margin-bottom: 0.0em;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            function transferMethodSelect() {
+
+                if ($('#achRadio').is(':checked')) {
+                    $('#achFunding').show();
+                    $('#submitButton').show();
+                    $('#directFunding, #checkFunding, #wireFunding').hide();
+                    $('#bankAccountRequireValidation').val(true);
+                    $('#QualifiedDirectTransfer_RequireValidation').val(false);
+                }
+                if ($('#directRadio').is(':checked')) {
+                    $('#directFunding').show();
+                    $('#submitButton').show();
+                    $('#achFunding, #checkFunding, #wireFunding').hide();
+                    $('#bankAccountRequireValidation').val(false);
+                    $('#QualifiedDirectTransfer_RequireValidation').val(true);
+                }
+                if ($('#wireRadio').is(':checked')) {
+                    $('#wireFunding').show();
+                    $('#submitButton').show();
+                    $('#directFunding, #achFunding, #checkFunding').hide()
+                    $('#bankAccountRequireValidation').val(false);
+                    $('#QualifiedDirectTransfer_RequireValidation').val(false);
+                }
+                if ($('#checkRadio').is(':checked')) {
+                    $('#checkFunding').show();
+                    $('#submitButton').show();
+                    $('#directFunding, #achFunding, #wireFunding').hide()
+                    $('#bankAccountRequireValidation').val(false);
+                    $('#QualifiedDirectTransfer_RequireValidation').val(false);
+                }
+            }
+
+            $('#achRadio, #directRadio, #wireRadio, #checkRadio').change(transferMethodSelect);
+            $('#QualifiedDirectTransfer_RequireValidation').val(false);
+            transferMethodSelect();
+        });
+
+    </script>
+    
+<meta name="Description" content="Sign up with U-Haul Investors Club® for free. Easy asset-backed direct investing, diversified investments and opportunities." />
+<style type="text/css">
+    p.info
+    {
+        margin-bottom: .8em;
+    }
+</style>
+<script type="text/javascript" src="/Scripts/jquery.maskedinput-1.2.2.min.js"></script>
+<script type="text/javascript" src="/Scripts/jquery.confirmmatch.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input[mask]').each(function () {
+            var mask = $(this).attr('mask');
+            $(this).mask(mask);
+        });
+    });
+</script>
+<title>
+	
+        Join for free - U-Haul Investors Club®
+</title></head>
+<body>
+    
+    <div class="header">
+        <div class="main">
+            
+
+<script type="text/javascript" src="/scripts/jquery.odoticker.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.numbers').odoTicker({
+            number:  48887500,
+            speed: 0
+        });
+    });
+</script>
+<style type="text/css">
+    .odoTicker
+    {
+        height: 17px;   
+        overflow: hidden;
+        position: relative;        
+    }
+
+        .odoTicker .odoNumber
+        {
+            height: 187px;
+            width: 15px;
+            position: relative;
+            background-image: url('/content/images/numbers2.gif');
+            float: left;
+            overflow: hidden;
+            margin: 0 1px;
+        }
+
+    .header
+    {
+        padding-bottom: 0.8em;
+    }
+
+    .odometer
+    {
+        width: 400px;
+        height: auto;
+        font-size: 0.9em;
+    }
+</style>
+<div class="float_right">
+    
+    <p class="align_right bottom">
+        <a href="/Account/Login" class="header_button"><span class="user"></span>Member sign in</a>
+    </p>
+    <p class="align_right" style="margin-right: .35em;">
+        <small>Not a member?
+            <a href="/CreateAccount/AccountTypesSummary">Join for free</a>.</small>
+    </p>
+    <div class="odometer float_right">
+        <div class="numbers float_left" style="margin-left: 20px;">
+            <img src="/content/images/dollarsign.png" style="float: left;" />
+        </div>
+        <p class="no_bottom float_right">Invested by members as of today.</p>
+    </div>
+    
+</div>
+
+            <div class="title">
+                <div class="row">
+                    <div class="column">
+                        <a href="/">
+                            <img src="/Content/images/UICLogo.png" alt="U-Haul Investors Club® home page" /></a>
+                    </div>
+                    <div class="column_last">
+                        <a href="/">
+                            <img src="/Content/images/UICTagline.png" alt="U-Haul Investors Club® home page" /></a>
+                    </div>
+                </div>
+            </div>
+            <!-- end #title -->
+        </div>
+        <!-- end .main -->
+    </div>
+    <!-- end .header -->
+    <div class="navigation_wrapper">
+        <div class="main">
+            <div class="header_navigation">
+                <ul>
+                    
+<ul>
+    <li class="">
+        <a href="/AboutUs">About us</a></li>
+    <li class="">
+        <a href="/HowItWorks">How direct investing works</a></li>
+    <li class="">
+    <a href="/InvestmentOpportunities">Investment opportunities</a></li>
+    <li class="">
+        <a href="/FrequentlyAskedQuestions">Frequently asked questions</a></li>
+    <li class="last ">
+        <a href="/ContactUs">Contact us</a></li>
+</ul>
+
+                </ul>
+                
+            </div>
+            <!-- end .header_navigation -->
+        </div>
+        <!-- end .main -->
+    </div>
+    <!-- end .navigation_wrapper -->
+    <div class="content_wrapper">
+        <div class="main">
+            <div class="content">
+                <div class="row UIC">
+                    <div class="column">
+                        <p class="UIC_h1">
+                            U-Haul Investors Club<sup><small>&reg;</small></sup>
+                        </p>
+                    </div>
+                    <div class="column">
+                        <p class="UIC_tagline">
+                            Investing made easier<sup><small>&reg;</small></sup>
+                        </p>
+                    </div>
+                </div>
+                
+    <div class="row column_2 bottom">
+        <div class="column">
+            <h1 class="bottom">Join for free!</h1>
+            <p>
+                Already a member?
+            <a href="/Account/Login">Sign in</a>.
+            </p>
+        </div>
+        <div class="column_last">
+            <p class="secure float_right">
+                <strong>This page is secure.</strong>
+            </p>
+        </div>
+    </div>
+    <h2>Coverdell Educational Savings Account (CESA)</h2>
+    
+
+<!-- All of the <li>s need to be on the same line or they will display with a small space between them. -->
+
+<ol class="progTracker" data-progtracker-steps="5">
+    <li class="progTrackerDone">Account Details</li><li class="progTrackerDone">Beneficiaries</li><li class="progTrackerActive">Funding</li><li class="progTrackerToDo">E-Signature</li><li class="progTrackerToDo">Activate Account!</li>
+</ol>
+
+    <form action="/CreateAccount/CoverdellEsaFunding" method="post">
+    <div class="form">
+        
+        <h3>Startup</h3>
+        <div class="row">
+            <span class="grouping label_right">
+                <input id="achRadio" name="TransferMethod" type="radio" value="ACH" />
+                <label for="achRadio">
+                    A new cash contribution - ACH transfer from one of your existing bank or money market accounts</label>
+            </span>
+        </div>
+        <br />
+        
+        <h3>Direct transfer / Rollover</h3>
+        <div class="row">
+            <span class="grouping label_right">
+                <input id="directRadio" name="TransferMethod" type="radio" value="CustodianToCustodian" />
+                <label for="directRadio">
+                    A direct transfer from an existing Coverdell Educational Savings Account</label>
+            </span>
+        </div>
+        <div class="row">
+            <span class="grouping label_right">
+                <input id="wireRadio" name="TransferMethod" type="radio" value="IndirectWireTransfer" />
+                <label for="wireRadio">
+                    A wire transfer from your checking or savings account</label>
+            </span>
+        </div>
+        <div class="row">
+            <span class="grouping label_right">
+                <input id="checkRadio" name="TransferMethod" type="radio" value="Check" />
+                <label for="checkRadio">
+                    A check from your checking or savings account</label>
+            </span>
+        </div>
+    </div>
+    <div id="achFunding" class="form bottom" style="display: none">
+        <p>
+            Since you have elected to make a new contribution to your new U-Haul Investors Club's
+            Education Savings Account, you will need to link your new U-Haul Investors Club
+            account to one of your existing bank or money market accounts. Insert below the
+            information to link to such financial institution account.
+        </p>
+        <div class="message">
+            <p class="info bottom">
+                It will take 3 to 7 business days for U-Haul Investors Club to receive and process
+                your transaction.
+            </p>
+        </div>
+        <div class="row column_2">
+            <div class="column" style="width: 40%;">
+                
+<fieldset id="bankAccountView_financialInstitution_fieldSet">
+    <legend>Financial institution</legend>
+    <div class="row">
+        <span class="grouping">
+            <label>
+                Financial institution name</label>
+            <input id="EsaBankAccount_BankAccount_FinancialInstitutionName" name="EsaBankAccount.BankAccount.FinancialInstitutionName" style="width:16em" type="text" value="" />
+        </span>
+    </div>
+    <div class="row">
+        <span class="grouping">
+            <label>
+                Street address <small class="subtle">Optional</small>
+                </label>
+            <input id="EsaBankAccount_BankAccount_Address" name="EsaBankAccount.BankAccount.Address" style="width:16em" type="text" value="" />
+        </span>
+    </div>
+    <div class="row">
+        <span class="grouping">
+            <label>
+                City <small class="subtle">Optional</small>
+                </label>
+            <input id="EsaBankAccount_BankAccount_City" name="EsaBankAccount.BankAccount.City" style="width:9.3em" type="text" value="" />
+        </span><span class="grouping">
+            <label>
+                State <small class="subtle">Optional</small>
+                </label>
+            <select id="EsaBankAccount_BankAccount_State" name="EsaBankAccount.BankAccount.State"><option value="">Choose...</option>
+<option value="AL">AL - Alabama</option>
+<option value="AK">AK - Alaska</option>
+<option value="AZ">AZ - Arizona</option>
+<option value="AR">AR - Arkansas</option>
+<option value="CA">CA - California</option>
+<option value="CO">CO - Colorado</option>
+<option value="CT">CT - Connecticut</option>
+<option value="DC">DC - District of Columbia</option>
+<option value="DE">DE - Delaware</option>
+<option value="FL">FL - Florida</option>
+<option value="GA">GA - Georgia</option>
+<option value="HI">HI - Hawaii</option>
+<option value="ID">ID - Idaho</option>
+<option value="IL">IL - Illinois</option>
+<option value="IN">IN - Indiana</option>
+<option value="IA">IA - Iowa</option>
+<option value="KS">KS - Kansas</option>
+<option value="KY">KY - Kentucky</option>
+<option value="LA">LA - Louisiana</option>
+<option value="ME">ME - Maine</option>
+<option value="MD">MD - Maryland</option>
+<option value="MA">MA - Massachusetts</option>
+<option value="MI">MI - Michigan</option>
+<option value="MN">MN - Minnesota</option>
+<option value="MS">MS - Mississippi</option>
+<option value="MO">MO - Missouri</option>
+<option value="MT">MT - Montana</option>
+<option value="NE">NE - Nebraska</option>
+<option value="NV">NV - Nevada</option>
+<option value="NH">NH - New Hampshire</option>
+<option value="NJ">NJ - New Jersey</option>
+<option value="NM">NM - New Mexico</option>
+<option value="NY">NY - New York</option>
+<option value="NC">NC - North Carolina</option>
+<option value="ND">ND - North Dakota</option>
+<option value="OH">OH - Ohio</option>
+<option value="OK">OK - Oklahoma</option>
+<option value="OR">OR - Oregon</option>
+<option value="PA">PA - Pennsylvania</option>
+<option value="RI">RI - Rhode Island</option>
+<option value="SC">SC - South Carolina</option>
+<option value="SD">SD - South Dakota</option>
+<option value="TN">TN - Tennessee</option>
+<option value="TX">TX - Texas</option>
+<option value="UT">UT - Utah</option>
+<option value="VT">VT - Vermont</option>
+<option value="VA">VA - Virginia</option>
+<option value="WA">WA - Washington</option>
+<option value="WV">WV - West Virginia</option>
+<option value="WI">WI - Wisconsin</option>
+<option value="WY">WY - Wyoming</option>
+</select>
+        </span>
+    </div>
+    <div class="row">
+        <span class="grouping">
+            <label>
+                Zip <small>(5 digits) <span class="subtle">Optional</span></small>
+                </label>
+            <input id="EsaBankAccount_BankAccount_Zip" maxlength="5" name="EsaBankAccount.BankAccount.Zip" style="width:4em" type="text" value="" />
+        </span>
+    </div>
+    <div class="row">
+        <span class="grouping">
+            <label>
+                Phone number <small>(10 digits) <span class="subtle">Optional</span></small>
+                </label>
+            <input id="EsaBankAccount_BankAccount_PhoneNumber" name="EsaBankAccount.BankAccount.PhoneNumber" style="width:10em" type="text" value="" />
+        </span>
+    </div>
+</fieldset>
+<fieldset id="bankAccountView_accountInformation_fieldSet">
+    <legend>Account information</legend>
+    <div class="row">
+        <span class="grouping">
+            <label>
+                Account holder
+                </label>
+            <input type="text" value="Ezra Hazell" disabled="disabled"
+                style="width: 12.5em;" />
+        </span>
+    </div>
+    <div class="row">
+        <span class="grouping">
+            <label>
+                Routing number
+                </label>
+            <input id="EsaBankAccount_BankAccount_RoutingNumber" name="EsaBankAccount.BankAccount.RoutingNumber" style="width:13em" type="text" value="" />
+        </span>
+    </div>
+    <div class="row">
+        <span class="grouping">
+            <label>
+                Account number
+                </label>
+            <input id="EsaBankAccount_BankAccount_AccountNumber" name="EsaBankAccount.BankAccount.AccountNumber" style="width:13em" type="text" value="" />
+        </span>
+    </div>
+    <div class="row">
+        <span class="grouping">
+            <label>
+                Confirm account number
+                </label>
+            <input id="EsaBankAccount_BankAccount_ConfirmAccountNumber" name="EsaBankAccount.BankAccount.ConfirmAccountNumber" style="width:13em" type="text" value="" />
+        </span>
+    </div>
+    <div class="row">
+        <span class="grouping" style="width: 100%;">
+            <label>
+                Account type</label>
+            <div class="label_right">
+                <input checked="checked" id="checking" name="EsaBankAccount.BankAccount.AccountType" type="radio" value="Checking" />
+                <label for="checking">
+                    Checking</label>
+                <input id="savings" name="EsaBankAccount.BankAccount.AccountType" type="radio" value="Savings" />
+                <label for="savings">
+                    Savings</label>
+            </div>
+        </span>
+    </div>    
+</fieldset>
+
+                <div class="row">
+                    <span class="grouping">
+                        <label>
+                            How much would you like to fund this account with today?
+                            
+                            <small class="subtle">Minimum
+                                $100.00</small></label>
+                        $<input id="AchTransferAmount" name="AchTransferAmount" style="width:&#32;10em;" type="text" value="" />
+                    </span>
+                    <span class="grouping">
+                        <label>
+                            Tax year
+                            
+                        </label>
+                        
+                        <span>
+                            <input disabled="disabled" id="TaxYear" maxlength="4" name="TaxYear" style="width:4em" type="text" value="2013" />
+                            <input id="TaxYear" name="TaxYear" type="hidden" value="2013" />
+                            
+                        </span>
+                    </span>
+                </div>
+                <fieldset>
+                    <legend>Account verification</legend><small>
+                        <p><small>You must verify your account in order to purchase U-Notes. We will make two small withdrawals (each under 50&cent;) from this account that only you as the account holder will know about. When your account has been debited, return to uhaulinvestorclub.com, sign in and verify the amount of the debits. These funds will be returned to your bank account upon verification.</small></p><p><small>I, the undersigned, agree that I want the startup deposit for my Coverdell ESA withdrawn from the account listed above in the amount shown below. Additionally, I hereby authorize and request Oxford Life Insurance Company to initiate an electronic debit entry or effect a change by any other commercially accepted practice to my account indicated above for the startup deposit shown below.</small></p></small>
+                    <div class="standoutbox" style="width: 100%;">
+                        <input type="checkbox" name="EsaBankAccount.AgreeToTerms" value="true" />
+                        I agree to the terms of account verification above
+                        
+                    </div>
+                </fieldset>
+            </div>
+            <div class="column_last" style="width: 56%;">
+                <img src="/Content/images/check.png" class="">
+                <br />
+                <br />
+                <strong>Not sure?</strong> Find routing numbers for:
+                <ul style="margin-top: 5px;">
+                    <li><a href="https://www.wellsfargo.com/help/routing_number/index" target="_blank">Wells
+                        Fargo</a></li>
+                    <li><a href="https://www.bankofamerica.com/products/deposits/resources/faq-tax-preparation.go"
+                        target="_blank">Bank of America</a></li>
+                    <li><a href="https://www.chase.com/index.jsp?pg_name=ccpmapp/smallbusiness/shared/page/routing_number"
+                        target="_blank">Chase</a></li>
+                    <li><a href="http://www.routingdb.com/citibank-routing-number.html" target="_blank">Citibank</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="directFunding" class="form bottom" style="display: none">
+        
+<div>
+    <p style="color: #000">
+        <strong>Surrendering company's information and rollover instructions:</strong>
+    </p>
+    <div class="row">
+        <span class="grouping">
+            <label>
+                Company name </label>
+            <input id="QualifiedDirectTransfer_SurrenderingCompanyName" name="QualifiedDirectTransfer.SurrenderingCompanyName" size="80" type="text" value="" />
+        </span>
+    </div>
+    <div class="row">
+        <span class="grouping">
+            <label>
+                Street address </label>
+            <input id="QualifiedDirectTransfer_SurrenderingCompanyAddress" name="QualifiedDirectTransfer.SurrenderingCompanyAddress" size="80" type="text" value="" />
+        </span>
+    </div>
+    <div class="row">
+        <span class="grouping">
+            <label>
+                City </label>
+            <input id="QualifiedDirectTransfer_SurrenderingCompanyCity" name="QualifiedDirectTransfer.SurrenderingCompanyCity" size="35" type="text" value="" />
+        </span><span class="grouping">
+            <label>
+                State </label>
+            <select id="QualifiedDirectTransfer_SurrenderingCompanyState" name="QualifiedDirectTransfer.SurrenderingCompanyState"><option value="">Choose...</option>
+<option value="AL">AL - Alabama</option>
+<option value="AK">AK - Alaska</option>
+<option value="AZ">AZ - Arizona</option>
+<option value="AR">AR - Arkansas</option>
+<option value="CA">CA - California</option>
+<option value="CO">CO - Colorado</option>
+<option value="CT">CT - Connecticut</option>
+<option value="DC">DC - District of Columbia</option>
+<option value="DE">DE - Delaware</option>
+<option value="FL">FL - Florida</option>
+<option value="GA">GA - Georgia</option>
+<option value="HI">HI - Hawaii</option>
+<option value="ID">ID - Idaho</option>
+<option value="IL">IL - Illinois</option>
+<option value="IN">IN - Indiana</option>
+<option value="IA">IA - Iowa</option>
+<option value="KS">KS - Kansas</option>
+<option value="KY">KY - Kentucky</option>
+<option value="LA">LA - Louisiana</option>
+<option value="ME">ME - Maine</option>
+<option value="MD">MD - Maryland</option>
+<option value="MA">MA - Massachusetts</option>
+<option value="MI">MI - Michigan</option>
+<option value="MN">MN - Minnesota</option>
+<option value="MS">MS - Mississippi</option>
+<option value="MO">MO - Missouri</option>
+<option value="MT">MT - Montana</option>
+<option value="NE">NE - Nebraska</option>
+<option value="NV">NV - Nevada</option>
+<option value="NH">NH - New Hampshire</option>
+<option value="NJ">NJ - New Jersey</option>
+<option value="NM">NM - New Mexico</option>
+<option value="NY">NY - New York</option>
+<option value="NC">NC - North Carolina</option>
+<option value="ND">ND - North Dakota</option>
+<option value="OH">OH - Ohio</option>
+<option value="OK">OK - Oklahoma</option>
+<option value="OR">OR - Oregon</option>
+<option value="PA">PA - Pennsylvania</option>
+<option value="RI">RI - Rhode Island</option>
+<option value="SC">SC - South Carolina</option>
+<option value="SD">SD - South Dakota</option>
+<option value="TN">TN - Tennessee</option>
+<option value="TX">TX - Texas</option>
+<option value="UT">UT - Utah</option>
+<option value="VT">VT - Vermont</option>
+<option value="VA">VA - Virginia</option>
+<option value="WA">WA - Washington</option>
+<option value="WV">WV - West Virginia</option>
+<option value="WI">WI - Wisconsin</option>
+<option value="WY">WY - Wyoming</option>
+</select>
+        </span><span class="grouping">
+            <label>
+                Zip <small>(5 digits)</small> </label>
+            <input id="QualifiedDirectTransfer_SurrenderingCompanyZip" maxlength="5" name="QualifiedDirectTransfer.SurrenderingCompanyZip" size="10" type="text" value="" />
+        </span>
+    </div>
+    <div class="row">
+        <span class="grouping">
+            <label>
+                Phone number <small>(10 digits)</small>
+                </label>
+            <input id="QualifiedDirectTransfer_PhoneNumber" name="QualifiedDirectTransfer.PhoneNumber" style="width:&#32;10em;" type="text" value="" />
+        </span>
+    </div>
+    <div class="row">
+        <span class="grouping">
+            <label>
+                Account number </label>
+            <input id="QualifiedDirectTransfer_AccountNumber" name="QualifiedDirectTransfer.AccountNumber" style="width:&#32;10em;" type="text" value="" />
+        </span>
+    </div>
+    <div id="surrenderInstructions" class="row">
+        <p style="color: #000">Surrendering company instructions </p>
+        <div class="row">
+            <span class="grouping label_right">
+                <input id="surrenderAll" name="QualifiedDirectTransfer.SurrenderTransferType" type="radio" value="AllAvailableCash" />
+                <label for="surrenderAll">
+                    Transfer all available cash</label>
+            </span>
+        </div>
+        <div class="row">
+            <span class="grouping label_right">
+                <input id="surrenderClose" name="QualifiedDirectTransfer.SurrenderTransferType" type="radio" value="AllAvailableAndCloseAccount" />
+                <label for="surrenderClose">
+                    Close all positions, transfer all funds, and close my account</label>
+                <span class="label_right">
+                    <label><small class="subtle">(Warning: a surrender or liquidation of assets to fund your account may result in surrender or withdrawal penalties and taxable earnings and other important tax consequences.)</small></label></span>
+            </span>
+        </div>
+        <div class="row">
+            <span class="grouping label_right">
+                <input id="surrenderPartial" name="QualifiedDirectTransfer.SurrenderTransferType" type="radio" value="Partial" />
+                <label for="surrenderPartial">
+                    Transfer partial amount of cash</label>
+            </span>
+        </div>
+    </div>
+</div>
+<div id="directAmountDiv" class="row" style="display: none;">
+    <br />
+    <span class="grouping">
+        <p style="color: #000">
+            <strong>How much will you be depositing?</strong>
+            
+            
+        </p>
+        $<input id="QualifiedDirectTransfer_DirectTransferAmount" name="QualifiedDirectTransfer.DirectTransferAmount" style="width:&#32;10em;" type="text" value="" />
+    </span>
+</div>
+<div id="liquidateAssestsDiv" class="row" style="display: none;">
+    <label class="align_left" style="color: Black;">Liquidate your current holdings?</label>&nbsp;&nbsp;
+    <input id="liquidateAssetsYes" name="QualifiedDirectTransfer.LiquidateAssets" type="radio" value="True" />
+    <label for="liquidateAssetsYes">
+        Yes</label>
+    <input checked="checked" id="liquidateAssetsNo" name="QualifiedDirectTransfer.LiquidateAssets" type="radio" value="False" />
+    <label for="liquidateAssetsNo">
+        No</label>
+</div>
+<div style="display: none;" id="rolloverAssets">
+    <br />
+    <table id="rolloverAssetsTable" class="data_table no_sort">
+        <thead>
+            <tr>
+                <th>Liquidate <a class="small" style="color: #579CDC;" href="#" tip="The ticker symbol of the stock or mutual fund you are liquidating at the surrendering company">What's this?</a>
+                </th>
+                <th>Asset description <a class="small" style="color: #579CDC;" href="#" tip="A brief description of the asset you are liquidating (ie shares of stock)">What's this?</a>
+                </th>
+                <th>Number of shares <a class="small" style="color: #579CDC;" href="#" tip="Indicate the number of shares or units you are liquidating at the surrendering company">What's this?</a>
+                </th>
+                <th>Approximate value <a class="small" style="color: #579CDC;" href="#" tip="The dollar value of the shares or units to be liquidated">What's this?</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <input id="QualifiedDirectTransfer_RolloverAsset1_Liquidate" name="QualifiedDirectTransfer.RolloverAsset1.Liquidate" size="25" type="text" value="" />
+                </td>
+                <td>
+                    <input id="QualifiedDirectTransfer_RolloverAsset1_AssetDescription" name="QualifiedDirectTransfer.RolloverAsset1.AssetDescription" size="35" type="text" value="" />
+                </td>
+                <td>
+                    <input id="QualifiedDirectTransfer_RolloverAsset1_NumberOfShares" name="QualifiedDirectTransfer.RolloverAsset1.NumberOfShares" size="15" type="text" value="" />
+                </td>
+                <td>$<input id="QualifiedDirectTransfer_RolloverAsset1_ApproximateValue" name="QualifiedDirectTransfer.RolloverAsset1.ApproximateValue" size="10" type="text" value="" />
+                </td>
+            </tr>
+            <tr class="alternating_row">
+                <td>
+                    <input id="QualifiedDirectTransfer_RolloverAsset2_Liquidate" name="QualifiedDirectTransfer.RolloverAsset2.Liquidate" size="25" type="text" value="" />
+                </td>
+                <td>
+                    <input id="QualifiedDirectTransfer_RolloverAsset2_AssetDescription" name="QualifiedDirectTransfer.RolloverAsset2.AssetDescription" size="35" type="text" value="" />
+                </td>
+                <td>
+                    <input id="QualifiedDirectTransfer_RolloverAsset2_NumberOfShares" name="QualifiedDirectTransfer.RolloverAsset2.NumberOfShares" size="15" type="text" value="" />
+                </td>
+                <td>$<input id="QualifiedDirectTransfer_RolloverAsset2_ApproximateValue" name="QualifiedDirectTransfer.RolloverAsset2.ApproximateValue" size="10" type="text" value="" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input id="QualifiedDirectTransfer_RolloverAsset3_Liquidate" name="QualifiedDirectTransfer.RolloverAsset3.Liquidate" size="25" type="text" value="" />
+                </td>
+                <td>
+                    <input id="QualifiedDirectTransfer_RolloverAsset3_AssetDescription" name="QualifiedDirectTransfer.RolloverAsset3.AssetDescription" size="35" type="text" value="" />
+                </td>
+                <td>
+                    <input id="QualifiedDirectTransfer_RolloverAsset3_NumberOfShares" name="QualifiedDirectTransfer.RolloverAsset3.NumberOfShares" size="15" type="text" value="" />
+                </td>
+                <td>$<input id="QualifiedDirectTransfer_RolloverAsset3_ApproximateValue" name="QualifiedDirectTransfer.RolloverAsset3.ApproximateValue" size="10" type="text" value="" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#surrenderAll, #surrenderClose, #surrenderPartial').change(surrenderSelect);
+        $('#liquidateAssetsYes, #liquidateAssetsNo').change(liquidateSelect);
+
+        liquidateSelect();
+        surrenderSelect();
+    });
+
+    function surrenderSelect() {
+        if ($('#surrenderPartial').is(':checked')) {
+            $('#directAmountDiv').show();
+            $('#liquidateAssestsDiv').show();
+        }
+
+        if ($('#surrenderAll').is(':checked') || $('#surrenderClose').is(':checked')) {
+            $('#directAmountDiv').hide();
+            $('#liquidateAssestsDiv').hide();
+            $('#liquidateAssetsNo').attr('checked', true);
+            liquidateSelect();
+        }
+    }
+
+    function liquidateSelect() {
+        if ($('#liquidateAssetsYes').is(':checked')) {
+            $('#rolloverAssets').show();
+        }
+        if ($('#liquidateAssetsNo').is(':checked')) {
+            $('#rolloverAssetsTable')
+            $('#rolloverAssets').hide();
+        }
+    }
+</script>
+
+        <br />
+        <div class="message">
+            <p class="info bottom">
+                Upon submitting your application, you must <strong>print and sign</strong> the form
+                and mail it to:
+                <br />
+                <br />
+                
+
+Oxford Life Insurance Company<br />
+Attn: U-Haul Investors Club<br />
+2721 North Central Avenue<br />
+Phoenix, AZ 85004
+            </p>
+        </div>
+        <p>
+            I understand the rules and conditions applicable to rollovers. I certify that I
+            meet all requirements for a qualified rollover of the funds being used to fund my
+            Coverdell Educational Savings Account. I acknowledge that Oxford Life Insurance Company 
+            assumes no responsibility or liability for any tax treatment of my rollover contribution 
+            under the Internal Revenue Code or otherwise.
+        </p>
+    </div>
+    <div id="wireFunding" class="form bottom" style="display: none">
+        <div id="wireAmountDiv" class="row">
+            <span class="grouping">
+                <p style="color: #000">
+                    <strong>How much will you be depositing?</strong>
+                    
+                    <small><a href="#" tip="If you are unsure of the exact amount, please provide a reasonable estimate.">Not sure?</a></small>
+                </p>
+                $<input id="WireTransferAmount" name="WireTransferAmount" style="width:&#32;10em;" type="text" value="" />
+            </span>
+        </div>
+        <div class="standout">
+            <p class="bottom">
+                <strong>Please wire proceeds to:</strong><br />
+                
+
+Bank name: Chase Bank<br />
+Beneficiary account name: Oxford Life Insurance Company Custodial Account<br />
+
+FBO:
+Ezra Hazell<br />
+
+Address: One Chase Plaza, New York, NY 10081<br />
+For Credit to: Account Number# 937152122
+<br />
+ABA #: 021 000 021<br />
+SWIFT code: CHASUS33 
+            </p>
+        </div>
+        <p>
+            I understand the rules and conditions applicable to rollovers. I certify that I
+            meet all requirements for a qualified rollover of the funds being used to fund my
+            Coverdell ESA. I acknowledge that Oxford Life Insurance Company assumes no responsibility
+            or liability for any tax treatment of my rollover contribution under the Internal
+            Revenue Code or otherwise.
+        </p>
+    </div>
+    <div id="checkFunding" class="form bottom" style="display: none">
+        <div id="Div1" class="row">
+            <span class="grouping">
+                <p style="color: #000">
+                    <strong>How much will you be depositing?</strong>
+                    
+                    <small><a href="#" tip="If you are unsure of the exact amount, please provide a reasonable estimate.">Not sure?</a></small>
+                </p>
+                $<input id="CheckTransferAmount" name="CheckTransferAmount" style="width:&#32;10em;" type="text" value="" />
+            </span>
+        </div>
+        <div class="standout">
+            <p>
+                <strong>Make check payable to:</strong><br />
+                Oxford Life Insurance Company FBO (Ezra Hazell), Coverdell ESA
+            </p>
+            <p class="bottom">
+                <strong>Mail checks to:</strong><br />
+                
+
+Oxford Life Insurance Company<br />
+Attn: U-Haul Investors Club<br />
+2721 North Central Avenue<br />
+Phoenix, AZ 85004
+            </p>
+        </div>
+        <p>
+            I understand the rules and conditions applicable to rollovers. I certify that I
+            meet all requirements for a qualified rollover of the funds being used to fund my
+            Coverdell Educational Savings Account. I acknowledge that Oxford Life Insurance 
+            Company assumes no responsibility or liability for any tax treatment of my rollover 
+            contribution under the Internal Revenue Code or otherwise.
+        </p>
+    </div>
+    <input id="submitButton" style="display: none" type="submit" class="body_button action"
+        value="Continue »" />
+    <input id="QualifiedDirectTransfer_RequireValidation" name="QualifiedDirectTransfer.RequireValidation" type="hidden" value="True" />
+    <input id="bankAccountRequireValidation" name="EsaBankAccount.BankAccount.RequireValidation" type="hidden" value="True" />
+    <input name="__RequestVerificationToken" type="hidden" value="G59ENqpiOQgm88mEquxO56Wl75G54Xeptm/tKTIgN8d/i2rFOinVMA4e/afahWUDEGmcjOvkqHCUDJh5s7B1XZuzXJZ5HFTh2CpBBNYMU2/AKUlgzjelnEcLAfKnXa9LbO1aaTNwSixXEGo6mq3cMxMgn2Y=" />
+    </form>
+            </div>
+            <!-- end content -->
+        </div>
+        <!-- end .main -->
+    </div>
+    <!-- end .content_wrapper -->
+    
+    <div class="footer_wrapper_top">
+        <div class="main">
+            <div class="row column_4">
+                <div class="column" style="width: 31.3%;">
+                    <h2>Fair investment returns?*</h2>
+                    
+                    
+                    <p>
+                        Bank of America Regular Savings:
+                        0.01%
+                    </p>
+                    
+                    <p>
+                        Money Market:
+                        0.42%
+                    </p>
+                    
+                    <p>
+                        ING Orange Savings:
+                        0.75%
+                    </p>
+                    
+                    <p>
+                        5-year CD yield (overnight averages):
+                        1.45%
+                    </p>
+                    
+                    <p>
+                        10-year treasury yield:
+                        2.81%
+                    </p>
+                    
+                    <p>
+                        <big><strong><em>Do your homework!</em></strong></big>
+                    </p>
+                </div>
+                <!-- end .column -->
+                <div class="column" style="width: 14%;">
+                    <h2>Diversify</h2>
+                    <p>
+                        Varying maturities
+                    </p>
+                    <p>
+                        Individual accounts
+                    </p>
+                    <p>
+                        Real estate
+                    </p>
+                    <p>
+                        Equipment
+                    </p>
+                    <p>
+                        Hard assets
+                    </p>
+                </div>
+                <!-- end .column -->
+                <div class="column" style="width: 19.4%;">
+                    <h2>Fixed interest rate</h2>
+                    <p>
+                        Easy to understand
+                    </p>
+                    <p>
+                        Payments you can count on
+                    </p>
+                    <p>
+                        No hidden costs
+                    </p>
+                    <p>
+                        No hidden fees
+                    </p>
+                </div>
+                <!-- end .column -->
+                <div class="column_last" style="width: 24.5%;">
+                    <h2>Asset-secured</h2>
+                    <p>
+                        See the asset yourself
+                    </p>
+                    <p>
+                        Extra protection on your investment
+                    </p>
+                    <p>
+                        Invest like the Smart Money&reg;
+                    </p>
+                </div>
+                <!-- end .column_last -->
+            </div>
+            <!-- end .row -->
+        </div>
+        <!-- end .main -->
+    </div>
+    <!-- end .footer_wrapper_top -->
+    
+    <div class="footer_wrapper_bottom">
+        <div class="main">
+            <div class="footer">
+                <ul class="subnav align_center" style="margin-bottom: 0;">
+                    <li>
+                        <a href="/">Home</a></li>
+                    <li>
+                        <a href="/AboutUs">About us</a></li>
+                    <li>
+                        <a href="/HowItWorks">How direct investing works</a></li>
+                    <li>
+                        <a href="/InvestmentOpportunities">Investment opportunities</a></li>
+                    <li>
+                        <a href="/FrequentlyAskedQuestions">Frequently asked questions</a></li>
+                    <li class="last">
+                        <a href="/ContactUs">Contact us</a>
+                        
+                    </li>
+                </ul>
+                <ul class="subnav align_center">
+                    <li>
+                        <a href="/Legal/SecuritiesAndExchangeCommissionFilings">SEC filings</a></li>
+                    <li>
+                        <a href="/Legal">Legal documents</a>
+                    </li>
+                    <li class="last">
+                        <a href="http://www.facebook.com/uhaulinvestorsclub/" target="_blank" onclick="__utmTrackEvent('Footer Social','Follow us on Facebook','Clicked');">
+                            <img alt="Follow us on Facebook!" style="max-width: 16px; vertical-align: middle; margin-right: 5px" src="/content/images/facebook.png" />Follow us
+                        </a>
+                    </li>
+                </ul>
+                <p style="margin-left: .8em;">
+                    <small>AMERCO has filed a registration statement (including a prospectus) with the U.S.
+                        Securities and Exchange Commission (SEC) for the offering to which this communication
+                        relates. Before you invest, you should read the prospectus in that registration
+                        statement and other documents the issuer has filed with the SEC for more complete
+                        information about AMERCO and this offering. You may get these documents for free
+                        by visiting EDGAR on the SEC Web site at www.sec.gov or under the Investment Opportunities/View
+                        Full Details pages of this website.</small>
+                </p>
+                
+                <p style="margin-left: .8em;">
+                    <small>* Effective
+                        December 2, 2013.
+                        Per bankofamerica.com, bankrate.com,  ing.com, and treasury.gov.
+                        Provided for comparison purposes only. Actual rates may vary.
+                        U-Haul Investors Club®
+                        is not responsible for nor does it guarantee accuracy of rates posted. <span class="nowrap">U-Notes</span> are not FDIC insured.</small>
+                </p>
+                
+                <p class="align_center">
+                    &copy;
+                    2013
+                    U-Haul Investors Club®. All Rights Reserved.
+                    <br />
+                    Patent Pending | Version 1.10.0.28757 (Release)
+                </p>
+            </div>
+            <!-- end .footer -->
+        </div>
+        <!-- end .main -->
+    </div>
+    <div id="visits">
+    </div>
+    <!-- end .footer_wrapper_bottom -->
+    <!-- START OF SmartSource Data Collector TAG -->
+    <!-- WebTrends SmartSource Data Collector                  -->
+    <!-- © 1996-2004 NetIQ Corporation.  All rights reserved.  -->
+    <!-- $DateTime: 2004/05/03 13:43:43 $ -->
+    <script language="Javascript"><!--
+    gVersion = "1.0";
+    //-->
+    </script>
+    <script language="Javascript1.1"><!--
+gVersion="1.1";
+//-->
+    </script>
+    <script language="Javascript1.2"><!--
+gVersion="1.2";
+var RE={"%09":/\t/g,"%20":/ /g,"%23":/\#/g,"%26":/\&/g,"%2B":/\+/g,"%3F":/\?/g,"%5C":/\\/g};
+//-->
+    </script>
+    <script language="Javascript1.3"><!--
+gVersion="1.3";
+//-->
+    </script>
+    <script language="Javascript1.4"><!--
+gVersion="1.4";
+//-->
+    </script>
+    <script language="Javascript1.5"><!--
+gVersion="1.5";
+//-->
+    </script>
+    <script language="JavaScript"><!--
+    var gImages = new Array;
+    var gIndex = 0;
+    var DCS = new Object();
+    var WT = new Object();
+    var DCSext = new Object();
+
+    var gDomain = "sdc.uhaul.com";
+    var gDcsId = "dcs08epeml7t49njxx9bffxh6_3w9d";
+
+    function dcsMultiTrack() {
+        for (var i = 0; i < arguments.length; i++) {
+            if (arguments[i].indexOf('WT.') == 0) {
+                WT[arguments[i].substring(3)] = arguments[i + 1];
+                i++;
+            }
+            if (arguments[i].indexOf('DCS.') == 0) {
+                DCS[arguments[i].substring(4)] = arguments[i + 1];
+                i++;
+            }
+            if (arguments[i].indexOf('DCSext.') == 0) {
+                DCSext[arguments[i].substring(7)] = arguments[i + 1];
+                i++;
+            }
+        }
+        var dCurrent = new Date();
+        DCS.dcsdat = dCurrent.getTime();
+        dcsTag();
+    }
+
+    // END OF NEWLY ADDED MultiTrack CODE
+
+    function dcsVar() {
+        var dCurrent = new Date();
+        WT.tz = dCurrent.getTimezoneOffset() / 60 * -1;
+        if (WT.tz == 0) {
+            WT.tz = "0";
+        }
+        WT.bh = dCurrent.getHours();
+        WT.ul = navigator.appName == "Netscape" ? navigator.language : navigator.userLanguage;
+        if (typeof (screen) == "object") {
+            WT.cd = navigator.appName == "Netscape" ? screen.pixelDepth : screen.colorDepth;
+            WT.sr = screen.width + "x" + screen.height;
+        }
+        if (typeof (navigator.javaEnabled()) == "boolean") {
+            WT.jo = navigator.javaEnabled() ? "Yes" : "No";
+        }
+        if (document.title) {
+            WT.ti = document.title;
+        }
+        WT.js = "Yes";
+        if (typeof (gVersion) != "undefined") {
+            WT.jv = gVersion;
+        }
+        DCS.dcsdat = dCurrent.getTime();
+        DCS.dcssip = "uhaulinvestorsclub.com";
+        DCS.dcsuri = window.location.pathname;
+        if (window.location.search) {
+            DCS.dcsqry = window.location.search;
+        }
+        if ((window.document.referrer != "") && (window.document.referrer != "-")) {
+            if (!(navigator.appName == "Microsoft Internet Explorer" && parseInt(navigator.appVersion) < 4)) {
+                DCS.dcsref = window.document.referrer;
+            }
+        }
+
+        //added for new.uhaul.com
+        $('#wtDCSURI').val(DCS.dcsuri);
+        $('#wtDCSQRY').val(DCS.dcsqry);
+        $('#wtTZ').val(WT.tz);
+        $('#wtBH').val(WT.bh);
+        $('#wtUL').val(WT.ul);
+        $('#wtCD').val(WT.cd);
+        $('#wtSR').val(WT.sr);
+        $('#wtJO').val(WT.jo);
+        $('#wtTI').val(WT.ti);
+        $('#wtJS').val(WT.js);
+        $('#wtJV').val(WT.jv);
+    }
+
+    function A(N, V) {
+        return "&" + N + "=" + dcsEscape(V);
+    }
+
+    function dcsEscape(S) {
+        if (typeof (RE) != "undefined") {
+            var retStr = new String(S);
+            for (R in RE) {
+                retStr = retStr.replace(RE[R], R);
+            }
+            return retStr;
+        }
+        else {
+            return escape(S);
+        }
+    }
+
+    function dcsCreateImage(dcsSrc) {
+        try {
+            if (document.images) {
+                gImages[gIndex] = new Image;
+                gImages[gIndex].src = dcsSrc;
+                gIndex++;
+            }
+            else {
+                document.write('<IMG BORDER="0" NAME="DCSIMG" WIDTH="1" HEIGHT="1" SRC="' + dcsSrc + '">');
+            }
+        }
+        catch (err) {
+
+        }
+    }
+
+    function dcsMeta() {
+        var myDocumentElements;
+        if (document.all) {
+            myDocumentElements = document.all.tags("meta");
+        }
+        else if (document.documentElement) {
+            myDocumentElements = document.getElementsByTagName("meta");
+        }
+        if (typeof (myDocumentElements) != "undefined") {
+            for (var i = 1; i <= myDocumentElements.length; i++) {
+                myMeta = myDocumentElements.item(i - 1);
+                if (myMeta.name) {
+                    if (myMeta.name.indexOf('WT.') == 0) {
+                        WT[myMeta.name.substring(3)] = myMeta.content;
+                    }
+                    else if (myMeta.name.indexOf('DCSext.') == 0) {
+                        DCSext[myMeta.name.substring(7)] = myMeta.content;
+                    }
+                    else if (myMeta.name.indexOf('DCS.') == 0) {
+                        DCS[myMeta.name.substring(4)] = myMeta.content;
+                    }
+                }
+            }
+        }
+    }
+
+    function dcsTag() {
+        var P = "http" + (window.location.protocol.indexOf('https:') == 0 ? 's' : '') + "://" + gDomain + (gDcsId == "" ? '' : '/' + gDcsId) + "/dcs.gif?";
+        for (N in DCS) {
+            if (DCS[N]) {
+                P += A(N, DCS[N]);
+            }
+        }
+        for (N in WT) {
+            if (WT[N]) {
+                P += A("WT." + N, WT[N]);
+            }
+        }
+        for (N in DCSext) {
+            if (DCSext[N]) {
+                P += A(N, DCSext[N]);
+            }
+        }
+        if (P.length > 2048 && navigator.userAgent.indexOf('MSIE') >= 0) {
+            P = P.substring(0, 2040) + "&WT.tu=1";
+        }
+        dcsCreateImage(P);
+    }
+
+    dcsVar();
+    dcsMeta();
+    dcsTag();
+    //-->
+    </script>
+    <noscript>
+        <img border="0" name="DCSIMG" width="1" height="1" src="http://sdc.uhaul.com/dcs08epeml7t49njxx9bffxh6_3w9d/njs.gif?dcsuri=/nojavascript&WT.js=No">
+    </noscript>
+    <!-- END OF Data Collection Server TAG -->
+    
+</body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<!-- meta -->
+	<title>U-Haul Investors Club&reg;</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, target-densitydpi=device-dpi, minimum-scale=1, maximum-scale=1.0">
+	<!-- css -->
+	<link href="css/font-awesome.min.css" rel="stylesheet">
+	<link href="css/UIC.css" rel="stylesheet" type="text/css" />
+	<!-- Scripts -->
+	<script src="js/vendor/custom.modernizr.js" type="text/javascript"></script>
+	<script src="js/vendor/jquery.js" type="text/javascript"></script>
+	<script src="js/uic.js" type="text/javascript"> </script>
+	<script src="js/jquery.odoticker.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+
+	$(document).ready(function(){
+       $(".option2").click(function(){
+           $("#part2").slideDown();
+           $("#part1, #part3").slideUp();
+       });
+       $(".option1").click(function(){
+           $("#part1").slideDown();
+           $("#part2, #part3").slideUp();
+       });
+
+        $(".option3").click(function(){
+           $("#part3").slideDown();
+           $("#part2, #part1").slideUp();
+       });
+        
+    });
+	
+	$(function(){
+
+		//Set up our odometer thing
+	  	$('.numbers').odoTicker({
+	            number:  45318400,
+	            speed: 1000
+	        });
+		});
+	</script>
+	<style type="text/css">
+		
+		ol.progTracker[data-progTracker-steps="6"] li {
+		    width: 16%;
+		}
+		ol.progTracker {
+		    max-width: 64.5em;
+		}
+		.standoutbox {
+		    max-width: 58.750em;
+		}
+		.box.yellow {
+		    max-width: 58.750em;
+		}
+		.box.gray {
+		    max-width: 35.75em;
+		}
+		.disclaimer {
+			max-width: 35.75em;
+		}
+		/* Inline Lists */
+		.inline-list {
+		  margin: 0 auto 1.0625em auto;
+		  margin-left: -1.375em;
+		  margin-right: 0;
+		  padding: 0;
+		  list-style: none;
+		  overflow: hidden;
+		}
+		.inline-list > li {
+		  list-style: none;
+		  float: left;
+		  margin-left: 1.375em;
+		  display: block;
+		}
+		.inline-list > li > * {
+		  display: block;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="content">
+		<header id="masthead">
+			<div class="upper">
+			 <div class="wrapper">
+				<div class="row">
+				   <div class="columns medium-6">
+						<a href="#" class="menu_button" onclick="openMenu(this);">
+							<i class="fa fa-bars fa-3x"></i>
+						</a>	
+						<h1><a href="index.html"><img src="img/logo.png" alt="U-Haul Investors Club"></a></h1>
+						<h2 class="tagline medium-hide small-hide">Investing Made Easier<span>&#174;</span></h2>
+					</div>
+					<div class="columns medium-6">
+						<div class="info_right">
+							<ol>
+								<li class="header_button">
+									<a href="signin.html">
+										<i class="fa fa-user"></i>Member Sign In
+									</a>
+								</li>
+								<li class="header_button medium-hide large-hide">
+									<a href="0.06-join.html">
+										<i class="fa fa-user"></i>Sign Up
+									</a>
+								</li>
+								<li class="join small-hide">
+									<small>Not a member? <a href="0.06-join.html">Join for free today</a></small>
+								</li>
+								<li class="odometer small-hide">
+									<img src="img/dollarsign.png" alt="$">
+									<span class="numbers odoTicker"></span>
+									Invested by members as of today
+								</li>
+							</ol>	
+						</div>	
+				   </div>
+				   </div>
+				 </div>	<!-- end of wrapper -->
+			</div>
+			<nav class="menu">
+				<div class="wrapper">
+					<div class="row">
+						<ul>
+							<li><a href="0.01-aboutus.html">About</a></li>
+							<li><a href="0.02-how.html">How It Works</a></li>
+							<li><a href="0.03-invest.html">Investment Opportunities</a></li>
+							<li><a href="0.04-faq.html">FAQs</a></li>
+							<li><a href="0.05-contact.html">Contact</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</header>
+        
+        <div class="wrapper">
+        	 
+                <div class="row">
+                	<div class="large-12 columns">
+                		<h2>Join for free</h2>
+                		<p>Already a member? <a href="signin.html">Sign in</a></p>
+                		<h3>Transfer or Rollover your existing Traditional or Roth 401K</h3>
+                		<ol class="progTracker small-hide medium-hide" data-progtracker-steps="6">
+                          <li class="progTrackerDone">Eligibility</li>
+                          <li class="progTrackerDone">Account Details</li>
+                          <li class="progTrackerDone">Beneficiaries</li>
+                          <li class="progTrackerActive">Funding</li>
+                          <li class="progTrackerToDo">E-Signature</li>
+                          <li class="progTrackerToDo">Activate Account!</li>
+                       </ol>
+                       <div class="progress small-12 round large-hide"><span class="meter" style="width: 16%"></span></div>
+                	</div>
+                </div>  
+
+            <section class="row">
+            	<div class="large-9 small-12 large-uncentered small-centered columns"> 
+			            <form action="">
+			            	<h3>Startup</h3>
+			            	<div class="row">
+			            		<div class="large-12 columns">
+			        			   <label for=""><input type="radio" name="type" class="option1">&nbsp&nbsp&nbspA new cash contribution - ACH transfer from one of your existing bank or money market accounts</label>
+			        			</div>
+			        		</div>
+			        		<h3>Direct transfer / Rollover</h3>
+			            	<div class="row">
+			            		<div class="large-12 columns">
+			            		   <label for=""><input type="radio" name="type" class="option2">&nbsp&nbsp&nbspA direct transfer from an existing Coverdell Educational Savings Account</label>
+			    		  	  	   <label for=""><input type="radio" name="type" class="option3">&nbsp&nbsp&nbspA wire transfer from your checking or savings account</label>
+			    		  	  	   <label for=""><input type="radio" name="type" class="option3">&nbsp&nbsp&nbspA check from your checking or savings account</label>
+			    		  	  	</div>
+			    		  	</div>
+
+	    		  	  <div class="row" id="part1" style="display:none">
+		            	<section class="columns large-5 medium-5">
+		            		<h4>Financial institution</h4>
+		            		<label for="">Financial institution's name <input type="text"></label>
+		            		<label for="">Street <small>(optional)</small><input type="text"></label>
+		            		<label for="">City <small>(optional)</small><input type="text"></label>
+		            		<label for="">State <small>(optional)</small><select name="" id="">
+		            			<option value=""></option>
+		            			<option value=""></option>
+		            			<option value=""></option>
+		            			<option value=""></option>
+		            		</select></label>
+		                    <label for="">Zip <small>(optional)</small><input type="text"></label>
+		                    <label for="">Phone number (10 digits) <small>(optional)</small><input type="text"></label>
+		                    <label for="">Account holder's name <input type="text"></label>
+		                    <h4>Account information</h4>
+		                    <label for="">Routing number <input type="text"></label>
+		                    <label for="">Account number <input type="text"></label>
+		                    <label for="">Confirm account number <input type="text"></label>
+		                    <p>Account type</p>
+		                    <label for=""><input type="radio" name="type" id="checking">&nbsp&nbspChecking</label>
+		                    <label for=""><input type="radio" name="type" id="savings">&nbsp&nbspSaving</label>
+		                    
+		                    <div class="row">
+                          	  <div class="columns large-4 small-12 ">
+	                             <p>How much will you be funding? <sub>(Minimum $100)</sub></p>
+                               	  <p>$<input type="text"></p>
+                           	  </div>
+                            </div>
+
+                            <div class="row">
+                          	  <div class="columns large-3 small-12 ">
+	                             <label for="">Tax year
+	                             <input type="number"></label>
+                           	  </div>
+                            </div>
+
+		            	</section>
+		            	<section class="columns large-7 medium-7">
+		            		  <img src="img/check.png" alt="">
+		            		  <p><strong>Not sure?</strong>Find routing numbers for:</p>
+		            		  <ul>
+		            		  	<li><a href="">Wells Fargo</a></li>
+		            		  	<li><a href="">Bank of America</a></li>
+		            		  	<li><a href="">Chase</a></li>
+		            		  	<li><a href="">Citibank</a></li>
+		            		  </ul>
+		            	</section>
+		            </div><!--end of part1-->
+
+		            <div id="part2" class="large-9 small-12 columns" style="display:none">
+	                              <p><strong>Surrendering company's information and rollover instructions:</strong></p>
+	                              <div class="row">
+	                              	  <div class="large-6 columns"><label for="">Company name <input type="text"></label></div>
+	                              	  <div class="large-6 columns"><label for="">Street address <input type="text"></label></div>
+	                              </div>
+	                              <div class="row">
+	                              	  <div class="large-4 columns"><label for="">City <input type="text"></label></div>
+	                              	  <div class="large-4 columns"><label for="">State <input type="text"></label></div>
+	                              	  <div class="large-4 columns"><label for="">Zip (5 digits) <input type="text"></label></div>
+	                              </div>
+	                               <div class="row">
+	                              	  <div class="large-6 columns"><label for="">Phone number (10 digits)<input type="text"></label></div>
+	                              	  <div class="large-6 columns"><label for="">Account number <input type="text"></label></div>
+	                              </div>
+	                              <p>Surrendering company instructions</p>
+                                    <label for=""><input type="radio" name="tran-type">&nbsp&nbsp&nbspTransfer all available cash </label>
+            		  	  	      <label for=""><input type="radio" name="tran-type">&nbsp&nbsp&nbspClose all positions, transfer all funds, and close my account <small class="subtle">(Warning: a surrender or liquidation of assets to fund your account may result in surrender or withdrawal penalties and taxable earnings and other important tax consequences.)</small></label>
+            		  	  	      <label for=""><input type="radio" name="tran-type">&nbsp&nbsp&nbspTransfer partial amount of cash</label>
+
+            		  	  	      <div class="gray box">
+            		  	  	      	  <p>Upon submitting this transfer request, you must print and sign the form and mail it to:</p>
+            		  	  	      	  <p>Oxford Life Insurance Company<br>
+										 Attn: U-Haul Investors Club<sup>&reg;</sup><br>
+										 2721 North Central Avenue<br>
+										 Phoenix, AZ 85004</p>
+            		  	  	      </div>
+
+            		  	  	      <p class="disclaimer">I intend that this transfer be accomplished as a trustee-to-trustee in a nontaxable manner in accordance with IRS rulings and not constitute actual or constructive receipt by me for federal income tax purposes. I hereby request and direct the transfer of the net proceeds of the account listed above. I understand that the proposed transfer may have important tax consequences and/or surrender or withdrawal penalties. I acknowledge that Oxford Life Insurance Company assumes no responsibility or liability for any tax treatment on this transfer under the Internal Revenue Code or otherwise.</p>
+                              </div><!-- end of part2 -->
+
+                        <div id="part3" class="large-9 small-12 columns disclaimer" style="display:none">
+                               	  <p>How much will you be depositing </p>
+                               	  <p>$<input type="text"></p>
+                               	  
+            		  	  	      <div class="gray box">
+            		  	  	      	  <p>Upon submitting this transfer request, you must print and sign the form and mail it to:</p>
+            		  	  	      	  <p>Oxford Life Insurance Company<br>
+										 Attn: U-Haul Investors Club<sup>&reg;</sup><br>
+										 2721 North Central Avenue<br>
+										 Phoenix, AZ 85004</p>
+            		  	  	      </div>
+            		  	  	      <p>I intend that this transfer be accomplished as a trustee-to-trustee in a nontaxable manner in accordance with IRS rulings and not constitute actual or constructive receipt by me for federal income tax purposes. I hereby request and direct the transfer of the net proceeds of the account listed above. I understand that the proposed transfer may have important tax consequences and/or surrender or withdrawal penalties. I acknowledge that Oxford Life Insurance Company assumes no responsibility or liability for any tax treatment on this transfer under the Internal Revenue Code or otherwise.</p>
+                              </div><!-- end of part3 -->
+                              
+			            	<div class="row">
+			                	<div class="large-6 columns">
+			                	   <div class="standoutbox">
+			                		<label for=""><input type="checkbox">&nbsp;&nbsp;&nbsp;I agree to the <a href="">terms of use</a></label>
+			                		</div>
+			                	</div>
+			                </div>
+			                <div class="row">
+			                	<div class="large-12 columns"><a href="0.11-rollover-5.html" class="button">Continue &gt;&gt;</a></div>
+			                </div>
+			            	<div class="row">
+			            		<div class="columns large-12 disclaimer">
+			            			<p>This is an application for opening a self directed individual retirement account with the custodian Oxford Life Insurance Company for IRA investors of U-Haul Investors Club. I authorize and direct Oxford Life Insurance Company to deposit all funds into the U-Haul Investors Club® account established for my IRA. Upon acceptance, Your IRA custodian will be:</p>
+			            			<p>Oxford Life Insurance Company<br>
+									2721 North Central Avenue<br>
+									Phoenix, AZ 85004<br>
+									investorsclub@oxfordlife.com
+								    </p>
+								    <p>Please consult your tax advisor if you are an active participant in a qualified corporate or Keogh pension, profit sharing, stock bonus or annuity plan; in a simplified employee pension or SIMPLE IRA; in a Section 403b tax sheltered annuity; or in a government plan as your deduction limit for contributions to a traditional IRA may be reduced or eliminated.</p>
+			            		</div>
+			            	</div>
+			            	
+			            </form>
+			         </div>
+			     </section>
+			
+       </div>		
+		<section class="contentFoot">
+		   <div class="wrapper">
+			<div class="large-hide">
+
+			<p>
+				The U-Haul Investors Club<sup>&reg;</sup> was founded by AMERCO&reg; and U-Haul International, Inc., the leader in the "do-it-yourself" moving and self-storage business. 
+			</p>
+			<p>
+				Traditionally, U-Haul assets were purchased with capital raised from lenders or through security issuance. Throughout the years, there has been a reliance on banks and intermediaries for funding. As a "do-it-yourself" company, we have developed an alternative measure to provide investors with the ability to invest directly in U-Notes&reg;, issued by AMERCO, our parent company, through the U-Haul Investors Club&reg;.</p>
+			<p><strong>Our goal is to provide our investors with a fair return on asset backed investments.</strong>
+			</p>
+			</div>
+			<div class="row medium-hide small-hide">
+				<div class="large-3 columns">
+					<h4>Fair Investment Returns?*</h4>
+					<ul>
+						<li>Bank of America Regular Savings: 0.01%</li>
+						<li>Money Market: 0.41%</li>
+						<li>ING Orange Savings: 0.75%</li>
+						<li>5-year CD yield (overnight averages): 1.36%</li>
+						<li>10-year treasury yield: 2.88%</li>
+					</ul>
+					<h5><em>Do Your Homework!</em></h5> 	
+				</div>
+				<div class="large-3 columns">
+					<h4>Diversify</h4>
+					<ul>
+						<li>Varying maturities</li>
+						<li>Individual accounts</li>
+						<li>Real estate</li>
+						<li>Equipment</li>
+						<li>Hard assets</li>
+					</ul>
+				</div>
+				<div class="large-3 columns">
+					<h4>Fixed interest rate</h4>
+					<ul>
+						<li>Easy to understand</li>
+						<li>Payments you can count on</li>
+						<li>No hidden costs</li>
+						<li>No hidden fees</li>
+					</ul>
+				</div>
+				<div class="large-3 columns">
+					<h4>Asset-secured</h4>
+					<ul>
+						<li>See the asset yourself</li>
+						<li>Extra protection on your investment</li>
+						<li>Invest like the Smart Money&reg;</li>
+					</ul>
+				</div>
+			</div>
+           </div>
+		</section>
+		
+		<!-- end content area! -->
+	</div>
+	<footer>
+		<div class="row">
+			<nav>
+				<ul>
+					<li><a href="#">Home</a></li>
+					<li><a href="#">About</a></li>
+					<li><a href="#">How Direct Investing Works</a></li>
+					<li><a href="#">Investment Opportunities</a></li>
+					<li><a href="#">FAQs</a></li>
+					<li><a href="#">Contact Us</a></li>
+				</ul>
+			</nav>
+			<nav>
+				<ul>
+					<li><a href="#">SEC Filings</a></li>
+					<li><a href="#">Legal Documents</a></li>
+					<li><a href="#"><img src="img/facebook.png" width="16" height="16"> Follow Us</a></li>
+				</ul>
+			</nav>
+			<p class="small">
+				AMERCO has filed a registration statement (including a prospectus) with the U.S. Securities and Exchange Commission (SEC) for the offering to which this communication relates. Before you invest, you should read the prospectus in that registration statement and other documents the issuer has filed with the SEC for more complete information about AMERCO and this offering. You may get these documents for free by visiting EDGAR on the SEC Web site at www.sec.gov or under the Investment Opportunities/View Full Details pages of this website.
+			</p>
+			<p class="small">
+			* Effective September 16, 2013. Per bankofamerica.com, bankrate.com, ing.com, and treasury.gov. Provided for comparison purposes only. Actual rates may vary. U-Haul Investors Club® is not responsible for nor does it guarantee accuracy of rates posted. U-Notes® are not FDIC insured.
+			</p>
+			<p>&copy; 2013 U-Haul Investor's Club&reg;. All Rights Reserved.</p>
+			<p>Patent Pending | Version 1.9.20059 (Release)</p>
+		</div>
+	</footer>
+</body>
+</html>

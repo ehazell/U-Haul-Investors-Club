@@ -1,0 +1,673 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><link type="text/css" rel="stylesheet" media="screen" href="https://www.uhaul.com/uhaul.css" /><link type="text/css" rel="Stylesheet" href="/Content/site.css" /><link type="text/css" rel="Stylesheet" media="screen" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/smoothness/jquery-ui.css" />
+    <style type="text/css">
+        #ui-datepicker-div
+        {
+            display: none;
+        }
+
+        #loadIconOverlay
+        {
+            /*display: none;*/
+        }
+
+        .loadingSpinner
+        {
+            display: none;
+        }
+    </style>
+    <!-- IE6-specific fixes -->
+    <!--[if IE 6]>
+        <script type="text/javascript" src="https://www.uhaul.com/javascript/png_fix.js" language="javascript"></script>
+    <![endif]-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.replacetext.min.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="/scripts/underscore.js"></script>
+    <script type="text/javascript" src="/scripts/LoadingOverlay.js"></script>
+    
+    
+<script type="text/javascript" src="/Scripts/jquery.qtip-1.0.0-rc3.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('[tip]').each(function (i, obj) {
+            $(this).attr('tabindex', '999');
+            var tip = $(this).attr('tip');
+            $(obj).qtip(
+                {
+                    content: tip,
+                    show: 'mouseover',
+                    hide: 'mouseout',
+                    style:
+                    {
+                        border: { width: 2, radius: 6 },
+                        name: 'light',
+                        tip: true
+                    },
+                    position:
+                    {
+                        corner: { target: 'topRight', tooltip: 'bottomLeft' }
+                    }
+                }).click(function () { return false; });
+        });
+    });
+</script>
+
+
+<script src="/urchin.js" type="text/javascript"></script>
+<script type="text/javascript">
+    _userv = 0;
+    urchinTracker();
+</script>
+
+    <script type='text/javascript'>__utmTrackEvent('Footer Social', 'Follow us on Facebook', 'Viewed');</script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.data_table').not('.no_sort').tablesorter(
+                {
+                    widgets: ['zebra'],
+                    cssChildRow: 'child',
+                    cssHeader: 'sort',
+                    cssAsc: 'sort up sort_active',
+                    cssDesc: 'sort down sort_active',
+                    widgetZebra: { css: ['alternating_row', ''] },
+                    textExtraction: function (element) {
+                        var result = $('.sort', $(element)).text();
+                        result = result || $(element).text();
+                        return result;
+                    }
+                });
+
+            $('.data_table thead th:first').click();
+            $('.data_table thead th.default_sort').click();
+            $('input[type="text"]').attr('autocomplete', 'off');
+            $('#warnings').draggable({
+                cursor: 'move',
+                stop: function () {
+                    $.cookie('warnings-top', $(this).position().top);
+                    $.cookie('warnings-left', $(this).position().left);
+                }
+            });
+            if ($.cookie('warnings-top')) {
+                $('#warnings').css('top', $.cookie('warnings-top') + 'px');
+            }
+            if ($.cookie('warnings-left')) {
+                $('#warnings').css('left', $.cookie('warnings-left') + 'px');
+            }
+            destroyOverlay();
+
+            $('form[data-overlay], form[data_overlay]').submit(function () {
+                var message = $(this).attr('data-overlay') || $(this).attr('data_overlay');
+                createOverlay('.content_wrapper', message);
+            });
+
+            $("body *").replaceText(/U-Notes(?!®)/gi, 'U-Notes®');
+            $("body *").replaceText(/U-Note(?!(s®)|(®))/gi, 'U-Note®');
+            $("body *").replaceText(/U-Haul Investors Club(?!®)/gi, 'U-Haul Investors Club®');
+            $("body *").replaceText(/®/gi, '<small style="text-decoration: none !important;"><sup>&reg;</sup></small>');
+        });
+
+        function openCompleteLegalTermsPopup() {
+            var url = '/Legal';
+            return openPopup(url);
+        }
+
+        function openPopup(url) {
+            window.open(url, '', "status = 1, height = 480, width = 640, resizable = 0, scrollbars = 1");
+            return false;
+        }
+    </script>
+    
+<title>
+	
+        Join for free - U-Haul Investors Club®
+</title></head>
+<body>
+    
+    <div class="header">
+        <div class="main">
+            
+
+<script type="text/javascript" src="/scripts/jquery.odoticker.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.numbers').odoTicker({
+            number:  48887500,
+            speed: 0
+        });
+    });
+</script>
+<style type="text/css">
+    .odoTicker
+    {
+        height: 17px;   
+        overflow: hidden;
+        position: relative;        
+    }
+
+        .odoTicker .odoNumber
+        {
+            height: 187px;
+            width: 15px;
+            position: relative;
+            background-image: url('/content/images/numbers2.gif');
+            float: left;
+            overflow: hidden;
+            margin: 0 1px;
+        }
+
+    .header
+    {
+        padding-bottom: 0.8em;
+    }
+
+    .odometer
+    {
+        width: 400px;
+        height: auto;
+        font-size: 0.9em;
+    }
+</style>
+<div class="float_right">
+    
+    <p class="align_right bottom">
+        <a href="/Account/Login" class="header_button"><span class="user"></span>Member sign in</a>
+    </p>
+    <p class="align_right" style="margin-right: .35em;">
+        <small>Not a member?
+            <a href="/CreateAccount/AccountTypesSummary">Join for free</a>.</small>
+    </p>
+    <div class="odometer float_right">
+        <div class="numbers float_left" style="margin-left: 20px;">
+            <img src="/content/images/dollarsign.png" style="float: left;" />
+        </div>
+        <p class="no_bottom float_right">Invested by members as of today.</p>
+    </div>
+    
+</div>
+
+            <div class="title">
+                <div class="row">
+                    <div class="column">
+                        <a href="/">
+                            <img src="/Content/images/UICLogo.png" alt="U-Haul Investors Club® home page" /></a>
+                    </div>
+                    <div class="column_last">
+                        <a href="/">
+                            <img src="/Content/images/UICTagline.png" alt="U-Haul Investors Club® home page" /></a>
+                    </div>
+                </div>
+            </div>
+            <!-- end #title -->
+        </div>
+        <!-- end .main -->
+    </div>
+    <!-- end .header -->
+    <div class="navigation_wrapper">
+        <div class="main">
+            <div class="header_navigation">
+                <ul>
+                    
+<ul>
+    <li class="">
+        <a href="/AboutUs">About us</a></li>
+    <li class="">
+        <a href="/HowItWorks">How direct investing works</a></li>
+    <li class="">
+    <a href="/InvestmentOpportunities">Investment opportunities</a></li>
+    <li class="">
+        <a href="/FrequentlyAskedQuestions">Frequently asked questions</a></li>
+    <li class="last ">
+        <a href="/ContactUs">Contact us</a></li>
+</ul>
+
+                </ul>
+                
+            </div>
+            <!-- end .header_navigation -->
+        </div>
+        <!-- end .main -->
+    </div>
+    <!-- end .navigation_wrapper -->
+    <div class="content_wrapper">
+        <div class="main">
+            <div class="content">
+                <div class="row UIC">
+                    <div class="column">
+                        <p class="UIC_h1">
+                            U-Haul Investors Club<sup><small>&reg;</small></sup>
+                        </p>
+                    </div>
+                    <div class="column">
+                        <p class="UIC_tagline">
+                            Investing made easier<sup><small>&reg;</small></sup>
+                        </p>
+                    </div>
+                </div>
+                
+    <div class="row column_2 bottom">
+        <div class="column">
+            <h1>Activate Account!</h1>
+        </div>
+        <div class="column_last">
+            <p class="secure float_right">
+                <strong>This page is secure.</strong>
+            </p>
+        </div>
+    </div>
+    
+
+<!-- All of the <li>s need to be on the same line or they will display with a small space between them. -->
+
+<ol class="progTracker" data-progtracker-steps="3">
+    <li class="progTrackerDone">Account Details</li><li class="progTrackerDone">Link to Bank Account</li><li class="progTrackerActive">Activate Account!</li>
+</ol>
+
+    <div class="lightBlueGradiant message">
+        <h3>You're almost done!</h3>
+        <p class="success">
+            <strong>Your account details have been submitted.</strong>
+        </p>
+        <p>
+            <strong>All you need to do is check your email.</strong> An email confirming your
+            membership in the U-Haul Investors Club® with a subject of "Activate your <span class="nowrap">U-Haul</span> Investors Club account" has been sent to
+            your email address. Click the activation link in the email. You'll
+            then be confirmed and asked to <a href="/Account/Login">sign in</a> with the password you just created.
+        </p>
+        <p>
+            If you haven't received the confirmation email within 10 minutes:
+        </p>
+        <ul>
+            <li>Check your bulk or junk mail folder.</li>
+            <li>Or mark uhaulinvestorsclub.com as 'Not spam', then 
+            <a href="/CreateAccount/NewEmailVerificationRequest">get a new confirmation email</a>.</li>
+            <li>Or add uhaulinvestorsclub.com to your list of accepted email address domains, then
+                <a href="/CreateAccount/NewEmailVerificationRequest">get a new confirmation email</a>.</li>
+        </ul>
+        <p class="bottom">
+            If you still have trouble receiving the email, please
+            <a href="/ContactUs">contact us</a>.
+        </p>
+        
+        <br />
+        <p>
+            <strong>What's next?</strong> For your security two small amounts (each under $0.50)
+            will be debited from your bank account by <span class="nowrap">U-Haul Investors Club&reg;</span>. You will see these amounts appear 
+            on your online bank statement <strong>as soon as tomorrow</strong>, but possibly up to 3-4 business days from now. Once you have obtained these amounts, sign in
+            to your <span class="nowrap">U-Haul Investors Club&reg;</span> account and submit these precise amounts
+            to verify ownership of the account. <em>The two amounts will automatically be credited to your account within 10 business days.</em>
+        </p>
+        
+    </div>
+
+            </div>
+            <!-- end content -->
+        </div>
+        <!-- end .main -->
+    </div>
+    <!-- end .content_wrapper -->
+    
+    <div class="footer_wrapper_top">
+        <div class="main">
+            <div class="row column_4">
+                <div class="column" style="width: 31.3%;">
+                    <h2>Fair investment returns?*</h2>
+                    
+                    
+                    <p>
+                        Bank of America Regular Savings:
+                        0.01%
+                    </p>
+                    
+                    <p>
+                        Money Market:
+                        0.42%
+                    </p>
+                    
+                    <p>
+                        ING Orange Savings:
+                        0.75%
+                    </p>
+                    
+                    <p>
+                        5-year CD yield (overnight averages):
+                        1.45%
+                    </p>
+                    
+                    <p>
+                        10-year treasury yield:
+                        2.81%
+                    </p>
+                    
+                    <p>
+                        <big><strong><em>Do your homework!</em></strong></big>
+                    </p>
+                </div>
+                <!-- end .column -->
+                <div class="column" style="width: 14%;">
+                    <h2>Diversify</h2>
+                    <p>
+                        Varying maturities
+                    </p>
+                    <p>
+                        Individual accounts
+                    </p>
+                    <p>
+                        Real estate
+                    </p>
+                    <p>
+                        Equipment
+                    </p>
+                    <p>
+                        Hard assets
+                    </p>
+                </div>
+                <!-- end .column -->
+                <div class="column" style="width: 19.4%;">
+                    <h2>Fixed interest rate</h2>
+                    <p>
+                        Easy to understand
+                    </p>
+                    <p>
+                        Payments you can count on
+                    </p>
+                    <p>
+                        No hidden costs
+                    </p>
+                    <p>
+                        No hidden fees
+                    </p>
+                </div>
+                <!-- end .column -->
+                <div class="column_last" style="width: 24.5%;">
+                    <h2>Asset-secured</h2>
+                    <p>
+                        See the asset yourself
+                    </p>
+                    <p>
+                        Extra protection on your investment
+                    </p>
+                    <p>
+                        Invest like the Smart Money&reg;
+                    </p>
+                </div>
+                <!-- end .column_last -->
+            </div>
+            <!-- end .row -->
+        </div>
+        <!-- end .main -->
+    </div>
+    <!-- end .footer_wrapper_top -->
+    
+    <div class="footer_wrapper_bottom">
+        <div class="main">
+            <div class="footer">
+                <ul class="subnav align_center" style="margin-bottom: 0;">
+                    <li>
+                        <a href="/">Home</a></li>
+                    <li>
+                        <a href="/AboutUs">About us</a></li>
+                    <li>
+                        <a href="/HowItWorks">How direct investing works</a></li>
+                    <li>
+                        <a href="/InvestmentOpportunities">Investment opportunities</a></li>
+                    <li>
+                        <a href="/FrequentlyAskedQuestions">Frequently asked questions</a></li>
+                    <li class="last">
+                        <a href="/ContactUs">Contact us</a>
+                        
+                    </li>
+                </ul>
+                <ul class="subnav align_center">
+                    <li>
+                        <a href="/Legal/SecuritiesAndExchangeCommissionFilings">SEC filings</a></li>
+                    <li>
+                        <a href="/Legal">Legal documents</a>
+                    </li>
+                    <li class="last">
+                        <a href="http://www.facebook.com/uhaulinvestorsclub/" target="_blank" onclick="__utmTrackEvent('Footer Social','Follow us on Facebook','Clicked');">
+                            <img alt="Follow us on Facebook!" style="max-width: 16px; vertical-align: middle; margin-right: 5px" src="/content/images/facebook.png" />Follow us
+                        </a>
+                    </li>
+                </ul>
+                <p style="margin-left: .8em;">
+                    <small>AMERCO has filed a registration statement (including a prospectus) with the U.S.
+                        Securities and Exchange Commission (SEC) for the offering to which this communication
+                        relates. Before you invest, you should read the prospectus in that registration
+                        statement and other documents the issuer has filed with the SEC for more complete
+                        information about AMERCO and this offering. You may get these documents for free
+                        by visiting EDGAR on the SEC Web site at www.sec.gov or under the Investment Opportunities/View
+                        Full Details pages of this website.</small>
+                </p>
+                
+                <p style="margin-left: .8em;">
+                    <small>* Effective
+                        December 2, 2013.
+                        Per bankofamerica.com, bankrate.com,  ing.com, and treasury.gov.
+                        Provided for comparison purposes only. Actual rates may vary.
+                        U-Haul Investors Club®
+                        is not responsible for nor does it guarantee accuracy of rates posted. <span class="nowrap">U-Notes</span> are not FDIC insured.</small>
+                </p>
+                
+                <p class="align_center">
+                    &copy;
+                    2013
+                    U-Haul Investors Club®. All Rights Reserved.
+                    <br />
+                    Patent Pending | Version 1.10.0.28757 (Release)
+                </p>
+            </div>
+            <!-- end .footer -->
+        </div>
+        <!-- end .main -->
+    </div>
+    <div id="visits">
+    </div>
+    <!-- end .footer_wrapper_bottom -->
+    <!-- START OF SmartSource Data Collector TAG -->
+    <!-- WebTrends SmartSource Data Collector                  -->
+    <!-- © 1996-2004 NetIQ Corporation.  All rights reserved.  -->
+    <!-- $DateTime: 2004/05/03 13:43:43 $ -->
+    <script language="Javascript"><!--
+    gVersion = "1.0";
+    //-->
+    </script>
+    <script language="Javascript1.1"><!--
+gVersion="1.1";
+//-->
+    </script>
+    <script language="Javascript1.2"><!--
+gVersion="1.2";
+var RE={"%09":/\t/g,"%20":/ /g,"%23":/\#/g,"%26":/\&/g,"%2B":/\+/g,"%3F":/\?/g,"%5C":/\\/g};
+//-->
+    </script>
+    <script language="Javascript1.3"><!--
+gVersion="1.3";
+//-->
+    </script>
+    <script language="Javascript1.4"><!--
+gVersion="1.4";
+//-->
+    </script>
+    <script language="Javascript1.5"><!--
+gVersion="1.5";
+//-->
+    </script>
+    <script language="JavaScript"><!--
+    var gImages = new Array;
+    var gIndex = 0;
+    var DCS = new Object();
+    var WT = new Object();
+    var DCSext = new Object();
+
+    var gDomain = "sdc.uhaul.com";
+    var gDcsId = "dcs08epeml7t49njxx9bffxh6_3w9d";
+
+    function dcsMultiTrack() {
+        for (var i = 0; i < arguments.length; i++) {
+            if (arguments[i].indexOf('WT.') == 0) {
+                WT[arguments[i].substring(3)] = arguments[i + 1];
+                i++;
+            }
+            if (arguments[i].indexOf('DCS.') == 0) {
+                DCS[arguments[i].substring(4)] = arguments[i + 1];
+                i++;
+            }
+            if (arguments[i].indexOf('DCSext.') == 0) {
+                DCSext[arguments[i].substring(7)] = arguments[i + 1];
+                i++;
+            }
+        }
+        var dCurrent = new Date();
+        DCS.dcsdat = dCurrent.getTime();
+        dcsTag();
+    }
+
+    // END OF NEWLY ADDED MultiTrack CODE
+
+    function dcsVar() {
+        var dCurrent = new Date();
+        WT.tz = dCurrent.getTimezoneOffset() / 60 * -1;
+        if (WT.tz == 0) {
+            WT.tz = "0";
+        }
+        WT.bh = dCurrent.getHours();
+        WT.ul = navigator.appName == "Netscape" ? navigator.language : navigator.userLanguage;
+        if (typeof (screen) == "object") {
+            WT.cd = navigator.appName == "Netscape" ? screen.pixelDepth : screen.colorDepth;
+            WT.sr = screen.width + "x" + screen.height;
+        }
+        if (typeof (navigator.javaEnabled()) == "boolean") {
+            WT.jo = navigator.javaEnabled() ? "Yes" : "No";
+        }
+        if (document.title) {
+            WT.ti = document.title;
+        }
+        WT.js = "Yes";
+        if (typeof (gVersion) != "undefined") {
+            WT.jv = gVersion;
+        }
+        DCS.dcsdat = dCurrent.getTime();
+        DCS.dcssip = "uhaulinvestorsclub.com";
+        DCS.dcsuri = window.location.pathname;
+        if (window.location.search) {
+            DCS.dcsqry = window.location.search;
+        }
+        if ((window.document.referrer != "") && (window.document.referrer != "-")) {
+            if (!(navigator.appName == "Microsoft Internet Explorer" && parseInt(navigator.appVersion) < 4)) {
+                DCS.dcsref = window.document.referrer;
+            }
+        }
+
+        //added for new.uhaul.com
+        $('#wtDCSURI').val(DCS.dcsuri);
+        $('#wtDCSQRY').val(DCS.dcsqry);
+        $('#wtTZ').val(WT.tz);
+        $('#wtBH').val(WT.bh);
+        $('#wtUL').val(WT.ul);
+        $('#wtCD').val(WT.cd);
+        $('#wtSR').val(WT.sr);
+        $('#wtJO').val(WT.jo);
+        $('#wtTI').val(WT.ti);
+        $('#wtJS').val(WT.js);
+        $('#wtJV').val(WT.jv);
+    }
+
+    function A(N, V) {
+        return "&" + N + "=" + dcsEscape(V);
+    }
+
+    function dcsEscape(S) {
+        if (typeof (RE) != "undefined") {
+            var retStr = new String(S);
+            for (R in RE) {
+                retStr = retStr.replace(RE[R], R);
+            }
+            return retStr;
+        }
+        else {
+            return escape(S);
+        }
+    }
+
+    function dcsCreateImage(dcsSrc) {
+        try {
+            if (document.images) {
+                gImages[gIndex] = new Image;
+                gImages[gIndex].src = dcsSrc;
+                gIndex++;
+            }
+            else {
+                document.write('<IMG BORDER="0" NAME="DCSIMG" WIDTH="1" HEIGHT="1" SRC="' + dcsSrc + '">');
+            }
+        }
+        catch (err) {
+
+        }
+    }
+
+    function dcsMeta() {
+        var myDocumentElements;
+        if (document.all) {
+            myDocumentElements = document.all.tags("meta");
+        }
+        else if (document.documentElement) {
+            myDocumentElements = document.getElementsByTagName("meta");
+        }
+        if (typeof (myDocumentElements) != "undefined") {
+            for (var i = 1; i <= myDocumentElements.length; i++) {
+                myMeta = myDocumentElements.item(i - 1);
+                if (myMeta.name) {
+                    if (myMeta.name.indexOf('WT.') == 0) {
+                        WT[myMeta.name.substring(3)] = myMeta.content;
+                    }
+                    else if (myMeta.name.indexOf('DCSext.') == 0) {
+                        DCSext[myMeta.name.substring(7)] = myMeta.content;
+                    }
+                    else if (myMeta.name.indexOf('DCS.') == 0) {
+                        DCS[myMeta.name.substring(4)] = myMeta.content;
+                    }
+                }
+            }
+        }
+    }
+
+    function dcsTag() {
+        var P = "http" + (window.location.protocol.indexOf('https:') == 0 ? 's' : '') + "://" + gDomain + (gDcsId == "" ? '' : '/' + gDcsId) + "/dcs.gif?";
+        for (N in DCS) {
+            if (DCS[N]) {
+                P += A(N, DCS[N]);
+            }
+        }
+        for (N in WT) {
+            if (WT[N]) {
+                P += A("WT." + N, WT[N]);
+            }
+        }
+        for (N in DCSext) {
+            if (DCSext[N]) {
+                P += A(N, DCSext[N]);
+            }
+        }
+        if (P.length > 2048 && navigator.userAgent.indexOf('MSIE') >= 0) {
+            P = P.substring(0, 2040) + "&WT.tu=1";
+        }
+        dcsCreateImage(P);
+    }
+
+    dcsVar();
+    dcsMeta();
+    dcsTag();
+    //-->
+    </script>
+    <noscript>
+        <img border="0" name="DCSIMG" width="1" height="1" src="http://sdc.uhaul.com/dcs08epeml7t49njxx9bffxh6_3w9d/njs.gif?dcsuri=/nojavascript&WT.js=No">
+    </noscript>
+    <!-- END OF Data Collection Server TAG -->
+    
+</body>
+</html>

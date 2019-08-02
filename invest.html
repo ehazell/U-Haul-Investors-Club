@@ -1,0 +1,571 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<!-- meta -->
+	<title>Investments - U-Haul Investors Club&reg;</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, target-densitydpi=device-dpi, minimum-scale=1, maximum-scale=1.0">
+	<!-- css -->
+	<link href="css/font-awesome.min.css" rel="stylesheet">
+	<link href="css/UIC.css" rel="stylesheet" type="text/css" />
+	<!-- Scripts -->
+	<script src="js/vendor/custom.modernizr.js" type="text/javascript"></script>
+	<script src="js/vendor/jquery.js" type="text/javascript"></script>
+	<script src="js/uic.js" type="text/javascript"> </script>
+	<script src="js/jquery.odoticker.min.js" type="text/javascript"></script>
+	<script src="js/vendor/jquery.event.move.js" type="text/javascript"></script>
+	<script src='js/vendor/jquery.event.swipe.js' type="text/javascript"></script>
+
+	<script type="text/javascript">
+	var resizeTimer;
+
+	$(function(){
+
+		//Set up our odometer thing
+		$('.numbers').odoTicker({
+				number:  45318400,
+				speed: 1000
+			});
+		//do the picture slideshow
+		$('.slideshow').each(function(){
+			index=0;
+			$slideshowDots = $('<ul class="slideDots" />');
+			$(this).find('li').each(function(){
+				$(this).addClass('slide-'+index);
+				$slideshowDots.append('<li class="slide-'+index+'">&#9679;</li>');
+				index++;
+			});
+			$(this).append($slideshowDots);
+		});
+		$('.slideDots li').click(function(){
+			if(!$(this).hasClass('activeDot')){
+				$(this).closest('.slideshow').find('.active').removeClass('active').css('z-index','10').fadeOut();
+				$(this).siblings('.activeDot').removeClass('activeDot');
+				$(this).closest('ul').siblings('ul').find('.'+$(this).attr('class')).fadeIn().addClass('active').css('z-index','20');
+				$(this).addClass('activeDot');
+			}
+		});
+		$('.slideDots li:first-child').click();
+
+		//Set up the sliding investment opportunity table
+		index = 0;
+		$('.investments .child').each(function(){
+			$(this).addClass('investmentChild-'+index).data({'index':index});
+			$(this).prev().addClass('investment-'+index).data({'index':index,'activePage':0});
+			$('body').append('<div class="investmentPager large-hide pager-'+index+'"><ul><li class="active"></li><li></li><li></li><li class="medium-hide"></li></ul></div>');
+			$('.investment-'+index+', .pager-'+index+', .investmentChild-'+index).data("index",index);
+			index++;
+		});
+		//Add some click events to the opportunity table pagers
+		$('.investmentPager li').click(function(){
+			centerPager($(this).closest('.investmentPager').data('index'), $(this).index());
+		});
+		//Swiping stuff
+
+		$('.investments tr, .investmentPager')
+			.on('swipeleft', function(e){
+				var myIndex = 0;
+				var myActivePage = 0;
+				if ($(this).hasClass('swipeColumn')){
+					myIndex = $(this).data('index');
+					myActivePage = $(this).data('activePage');
+				}	else if ($(this).hasClass('child')){
+					myIndex = $(this).prev().data('index');
+					myActivePage = $(this).prev().data('activePage');
+				}	else {
+					myIndex = $(this).data('index');
+					myActivePage = $('.investment-'+$(this).data('index')).data('activePage');
+				}
+				centerPager(myIndex, myActivePage+1);
+
+			})
+			.on('swiperight', function(e){
+				var myIndex = 0;
+				var myActivePage = 0;
+				if ($(this).hasClass('swipeColumn')){
+					myIndex = $(this).data('index');
+					myActivePage = $(this).data('activePage');
+				}	else if ($(this).hasClass('child')){
+					myIndex = $(this).prev().data('index');
+					myActivePage = $(this).prev().data('activePage');
+				}	else {
+					myIndex = $(this).data('index');
+					myActivePage = $('.investment-'+$(this).data('index')).data('activePage');
+				}	
+				if (myActivePage >0)
+					centerPager(myIndex, myActivePage-1);
+
+			})
+			.on('movestart', function(e) {
+			  	// If the movestart is heading off in an upwards or downwards
+			  	// direction, prevent it so that the browser scrolls normally.
+			  	if ((e.distX > e.distY && e.distX < -e.distY) || (e.distX < e.distY && e.distX > -e.distY)) {
+			    	e.preventDefault();
+			    	return;
+			  	} else {
+			  		if ($(this).hasClass('swipeColumn')){
+			  			$(this).addClass('notransition');
+
+			  		} else if($(this).hasClass('child')){
+			  			$(this).prev().addClass('notransition');
+			  		} else {
+			  			$('.investment-'+$(this).data('index')).addClass('notransition');
+
+			  		}
+			  		var initialLeft = $(".notransition").offset().left - $(".notransition").offsetParent().offset().left;
+			  		$(".notransition").data('initialLeft', initialLeft );
+			  		console.log("initialLeft: "+ initialLeft+" | ParentOffset: "+ $(".notransition").offsetParent().offset().left)
+			  	}
+			})
+			.on('move',function (e){
+				var newLeft=$('.notransition').data('initialLeft') + e.distX;
+				$('.notransition').css('left',newLeft +"px");
+				$('.notransition').next().css('left', newLeft + $('.notransition').width() +"px");
+				//console.log($(".notransition").data('initialLeft'));
+
+			})
+			.on('moveend', function(e){
+				var myActivePage = $('.notransition').data('activePage');
+				var myIndex = $('.notransition').data('index');
+				if(e.distX/$(this).closest('tbody').width > .3){
+					myActivePage ++;
+				} else if (e.distX/$(this).closest('tbody').width < -.3 && myActivePage >0) {
+					myActivePage --;
+				}
+				$('.notransition').removeClass('notransition');
+				
+				centerPager(myIndex, myActivePage)
+			});
+		$(window).on('resize',throttle(resizeHandler));
+	});
+	function resizeHandler(e){
+		var windowWidth = $(window).width();
+		//Reset our heights
+		$('.swipeColumnBorders, .swipeColumn, .investments').css('height',"auto");
+
+		if(windowWidth >= breakpoints.medium){
+			//Large -- For now, doing nothing	
+		} else {
+			//Smaller screens
+			runningHeight=0;
+			$('.investments .child').each(function(){
+				//move the pager thing up and down
+				$('.pager-'+$(this).data('index')).css({'top':($(this).offset().top)+'px', height:$(this).height()});
+				//Set heights of things
+				$(this).css('top',runningHeight +"px");
+				$(this).prev().css('top',runningHeight +"px");
+				$('.pager-'+$(this).data("index")).css({'top': $(this).offset().top+"px","height":($(this).height())+"px", "left": $(this).offsetParent().offset().left+'px', "right":$(this).offsetParent().offset().left+'px'});
+					$(this).find('.swipeColumnBorders, .swipeColumn').css('height',$(this).height()+'px');
+					$(this).prev().css('height',$(this).height()+'px');
+					runningHeight += ($(this).height());
+					$(this).closest('.investments').css('height',runningHeight+"px");
+				centerPager($(this).data('index'), $(this).prev().data('activePage'));
+			});
+		}	
+	}
+	$(window).on('load', throttle(resizeHandler));
+	function centerPager(investmentIndex, pageIndex){
+		//Figure out our breakpoint size
+		var windowWidth = $(window).width();
+		var marginLeft = "0";
+
+		if(windowWidth >= breakpoints.medium){
+			//Let's center it for large
+			//Do nothing... the left position only matters for positioned (absolute/relative) elements
+
+		} else if (windowWidth<=breakpoints.small){
+			//let's center it small
+			switch (pageIndex){
+				case 0:
+					marginLeft=0;
+					break;
+				case 1:
+					marginLeft=-26;
+					break;
+				case 2: 
+					marginLeft=-51;
+					break;
+				case 3: //falls through
+				default:
+					marginLeft=-79;
+					pageIndex=3;
+					break;
+			}
+			$('.investment-'+investmentIndex).css('left',marginLeft+"%").data("activePage",pageIndex);
+			$('.investmentChild-'+investmentIndex).css('left', marginLeft+30+"%");
+
+		} else {
+			//Let's center it for medium
+			
+			switch (pageIndex){
+				case 0:
+					marginLeft=0;
+					break;
+				case 1:
+					marginLeft=-35;
+					break;
+				case 2: //falls through
+				default:
+					marginLeft=-68;
+					pageIndex=2;
+					break;
+			}
+			$('.investment-'+investmentIndex).css('left',marginLeft+"%").data("activePage",pageIndex);
+			$('.investmentChild-'+investmentIndex).css('left', marginLeft+20+"%");
+
+		}
+		
+		$('.pager-'+investmentIndex+' .active').removeClass('active');
+		$('.pager-'+investmentIndex+' li').eq(pageIndex).addClass('active');
+	}
+
+	</script>
+	
+</head>
+
+<body>
+	<div class="content">
+		<header id="masthead">
+			<div class="upper">
+			 <div class="wrapper">
+				<div class="row">
+				   <div class="columns medium-6">
+						<a href="#" class="menu_button" onclick="openMenu(this);">
+							<i class="fa fa-bars fa-3x"></i>
+						</a>	
+						<h1><a href="index.html"><img src="img/logo.png" alt="U-Haul Investors Club"></a></h1>
+						<h2 class="tagline medium-hide small-hide">Investing Made Easier<span>&#174;</span></h2>
+					</div>
+					<div class="columns medium-6">
+						<div class="info_right">
+								<ol>
+								<li class="header_button">
+									<a href="index-member.html">
+										<i class="fa fa-user"></i>Your account
+									</a>
+								</li>
+								<li class="header_button medium-hide large-hide">
+									<a href="signin.html">
+										<i class="fa fa-sign-out"></i>Sign out
+									</a>
+								</li>
+								<li class="join small-hide">
+									<small><a href="signin.html">Sign out</a></small>
+								</li>
+								<li class="odometer small-hide">
+									<img src="img/dollarsign.png" alt="$">
+									<span class="numbers odoTicker"></span>
+									Invested by members as of today
+								</li>
+							</ol>
+						</div>	
+				   </div>
+				   </div>
+				 </div>	<!-- end of wrapper -->
+			</div>
+			<nav class="menu">
+				<div class="wrapper">
+					<div class="row">
+						<ul>
+							<li><a href="index-member.html">Summary</a></li>
+							<li><a href="invest.html" class="active">Invest</a></li>
+							<li><a href="activity.html" class="small-hide">Activity</a></li>
+							<li><a href="transfer.html">Transfers</a></li>
+							<li><a href="statements.html" class="small-hide">Statements</a></li>
+							<li><a href="profile.html" class="small-hide">Profile</a></li>
+							<li><a href="help.html">Help</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		 </header>
+		<div class="wrapper">
+		<section class="row">
+        		<div class="large-4 columns">
+        			<h2>Invest</h2>
+        		</div>
+        		<div class="large-8 columns align_right">
+        			<h3 class="small-hide medium-hide">George Huang</h3>
+        			<h3 class="medium-hide small-hide">U-Haul Investors Club<sup>&reg;</sup> Traditional IRA #77435727</h3>
+        		</div>
+        </section>
+         <nav class="row">
+            	<div class="large-12 columns subnav_wrapper">
+	            	<ul class="subnav">
+	            		<li><a href="invest.html" class="active">Available<span class="nobreak"> U-Notes<sup>&reg;</sup></span></a></li>
+	            		<li><a href="note.html">Your U-Notes<sup>&reg;</sup></a></li>
+	            		<li class="small-hide"><a href="alert.html">Your investment alerts</a></li>
+	            	</ul>
+            	</div>
+            </nav>
+		 <div class="row">
+			<div class="large-12 columns">
+				<h4>Browse available <span class="nobreak">U-Notes<sup>&reg;</sup></span></h4>
+				<h5>Available funds: $576.26&nbsp&nbsp&nbsp&nbsp<a href=""></h5>
+				<p><a href="transfer.html"><i class="fa fa-plus-circle"></i>&nbsp&nbspAdd funds</a></p>
+				<table class="investments" cellpadding="0" cellspacing="0">
+			        <thead>
+			            <tr>
+			                <th class=""><a href="#">Offering #</a></th>
+			                <th class=""><a href="#">Description</a></th>    
+			                <th class="" tip="Annual Percentage Rate (APR)" tabindex="999"><a href="#">Rate</a></th>
+			                <th class="default_sort sort down sort_active" tip="Maximum length of time the series of U-Notes may be outstanding." tabindex="999"><a href="#">Term</a></th>
+			                <th tip="Percentage of offerings subscribed." tabindex="999" class=""><a href="#">% funded</a></th>
+			                <th class="" tip="Weekly closing when AMERCO may accept your subscription offer." tabindex="999"><a href="#">Acceptance</a>
+			                </th>
+			                <th class="" tabindex="999"><a href="#">Order</a>
+			                </th>
+			                <th class="large-hide" tabindex="999"><a href="#">Minimum increment</a></th>
+			                <th class="large-hide" tabindex="999"><a href="#">Payment method</a></th>
+			                <th>Details</th>
+			                <th style="display:none;"></th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			        	<tr class="swipeColumn">
+			                <td class="">
+			                    <strong class="large-hide">Offering #</strong>
+			                    UIC-02B-24
+			                </td>
+			                <td>
+			                	<strong class="large-hide">Description</strong> New Utility Dolly
+			                </td>
+			                
+			                <td class="" tip="Annual Percentage Rate (APR)" tabindex="999">
+			                	<strong class="large-hide">Rate</strong> 3%
+			                </td>
+			                <td class="align_center" tip="Maximum length of time the series of U-Notes may be outstanding." tabindex="999">
+			                    <strong class="large-hide">Term</strong> 2 years
+			                </td>
+			                <td class="medium-hide small-hide" tip="Percentage of offerings subscribed." tabindex="999">
+			                    <strong class="large-hide">%Funded</strong>
+			                    <div class="bar_wrapper">
+			                        <div class="bar align_right" style="width: 30%;">
+			                        </div>
+			                        <div class="percent">
+			                            30% </div>
+			                    </div>
+			                    
+			                </td>
+			                <td class="medium-hide small-hide align_center" tip="Weekly closing when AMERCO may accept your subscription offer." tabindex="999">
+			                    <strong class="large-hide">Acceptance</strong> 4 days
+			                </td>
+			                <td class="medium-hide small-hide" tip="Weekly closing when AMERCO may accept your subscription offer." tabindex="999">
+			                	  <strong>Order</strong>
+			                   <select name="" id="">
+			                   	<option value="">Choose</option>
+			                   	<option value="">$100.00</option>
+			                   	<option value="">$200.00</option>
+			                   	<option value="">$300.00</option>
+			                   </select>
+			                </td>
+			                <td class="large-hide" tip="" tabindex="999">
+			                    <strong>Minimum increment</strong> $100
+			                </td>
+			                <td class="large-hide" tip="Weekly closing when AMERCO may accept your subscription offer." tabindex="999">
+			                    <strong>Payment method</strong> Quarterly in arrears
+			                </td>
+			                <td class="medium-hide small-hide" >
+			               		<a class="expand" href="#">More info<i class="icon-expand-alt"></i></a> 
+			                </td>
+			                <td class="large-hide"><p><strong>Invest</strong></p><input type="checkbox"><input type="text" value="$100"></td>
+			            </tr>
+			            <tr class="child">
+			                <td colspan="8" class="tranche">
+			                    <div class="row swipeRow">
+							        <div class="large-2 columns swipeColumn">
+							            <div class="bar_wrapper large-hide small-hide">
+					                        <div class="bar" style="width: 30%;">
+					                        </div>
+					                        <div class="percent">
+					                            30% Funded</div>
+					                    </div>
+							            <div class="slideshow">
+							                <ul>
+							                	<li>
+							                		<img src="https://www.uhaulinvestorsclub.com/image_handler.ashx?assetImageId=7358" class="picture" alt="Made in USA">
+							                    	<br><small><em>
+							                        Made in USA</em></small>
+							                    </li>
+							                    <li>
+							                		<img src="https://www.uhaulinvestorsclub.com/image_handler.ashx?assetImageId=7359" class="picture" alt="Popular with U-Haul customers">
+							                    	<br><small><em>
+							                        Popular with U-Haul customers</em></small>
+							                   	</li>
+							                    <li>
+							                		<img src="https://www.uhaulinvestorsclub.com/image_handler.ashx?assetImageId=7360" class="picture" alt="Ideal for moving apartments">
+							                    	<br><small><em>Ideal for moving apartments</em></small>
+							                	</li>
+							                    <li>
+							                		<img src="https://www.uhaulinvestorsclub.com/image_handler.ashx?assetImageId=7361" class="picture" alt="Handy center grip">
+							                    	<br><small><em>Handy center grip</em></small>
+							                	</li>
+							                    <li>
+							                		<img src="https://www.uhaulinvestorsclub.com/image_handler.ashx?assetImageId=7362" class="picture" alt="Rolls heavy loads easily up or down stairs">
+							                    	<br><small><em>Rolls heavy loads easily up or down stairs</em></small>
+							                	</li>
+							                    <li>
+									                <img src="https://www.uhaulinvestorsclub.com/image_handler.ashx?assetImageId=7363" class="picture" alt="500 lb. capacity">
+									                <br><small><em>500 lb. capacity</em></small>
+							                	</li>
+							                </ul>
+							            </div>
+							            <ul class="large-hide medium-hide">
+							            	<li><strong>Category:</strong> Rental Item</li>
+											<li class="fullwidth">U-Haul has a complete product line of moving items specifically designed and manufactured with the do-it-yourself mover in mind. Our Pro Series Utility Dollies are the ideal choice when moving appliances, furniture, boxes and more.</li>
+										</ul>
+							            
+							        </div>
+							        <div class="large-5 columns swipeColumn-double swipeColumnBorders">
+							        	<div class="bar_wrapper large-hide medium-hide">
+					                        <div class="bar" style="width: 30%;">
+					                        </div>
+					                        <div class="percent">
+					                            30% Funded</div>
+					                    </div>
+							            <ul class="swipeColumn">
+							            	<li class="medium-hide small-hide"><strong>Category:</strong> Rental Item</li>
+							            	<li>
+							         		<strong><dfn title="Maximum number of units that may serve as collateral.">Collateral (up to)</dfn>:</strong> 400 New Utility Dollies</li>
+							            	<li>
+							         		<strong><dfn title="Maximum funding amount.">$ requested</dfn>:</strong> $18,000</li>
+							            	<li class="medium-hide small-hide">
+							                <strong><dfn title="Current amount subscribed to be funded.">$ subscribed to date</dfn>:</strong>
+							                $500</li>
+							            	<li class="medium-hide small-hide">
+							                <strong><dfn title="Current amount available for subscription.">$ open for subscription</dfn>:</strong> $17,500 </li>
+							            	<li>
+										    <strong><dfn title="First day to buy into a U-Note.">Offering date</dfn>:</strong>
+										    10/8/2013</li>
+							            	<li class="small-hide">
+										    <strong><dfn title="Payments are not always based on a flat interest rate. View payment schedule for full details.">Accelerated principal pay down</dfn>:</strong> First year: 76%, Next year: 24%</li>
+							            	<li>
+										    <strong><dfn title="Weekly closing when AMERCO may accept your subscription offer.">Acceptance date</dfn>:</strong> 10/15/2013*</li>
+							            	<li>
+										    <strong><dfn title="The date by which all payments will have been made.">Offering matures</dfn>:</strong> 2 years after 10/16/2013*
+										    </li>
+										</ul>
+										<ul class="swipeColumn small-hide">
+											<li class="large-hide"><strong>Category:</strong> Rental Item</li>
+											<li class="large-hide fullwidth">U-Haul has a complete product line of moving items specifically designed and manufactured with the do-it-yourself mover in mind. Our Pro Series Utility Dollies are the ideal choice when moving appliances, furniture, boxes and more.</li>
+										    <li class="fullwidth"><a href="https://www.uhaulinvestorsclub.com/document/download/3086/IndentureSupplement-Series1B-2B-4Band12B" target="_blank" class="link_pdf">Indenture Supplement, Series 1B, 2B, 4B and 12B</a>
+										    </li><li class="fullwidth">
+										    <a href="https://www.uhaulinvestorsclub.com/document/download/3087/PledgeandSecurityAgreement-SeriesUIC1B-2B-4Band12" target="_blank" class="link_pdf">Pledge and Security Agreement, Series UIC1B, 2B,4B and 12</a>
+										    
+										    </li><li class="fullwidth">
+										    <a href="https://www.uhaulinvestorsclub.com/document/download/3088/UIC-02BProspectusSupplement" target="_blank" class="link_pdf">UIC-02B Prospectus Supplement</a>
+										    </li>
+										</ul>
+
+							        </div>
+							        <div class="large-5 columns swipeColumn-double">
+							            <p class="medium-hide small-hide">U-Haul has a complete product line of moving items specifically designed and manufactured with the do-it-yourself mover in mind.&nbsp; Our Pro Series Utility Dollies are the ideal choice when moving appliances, furniture, boxes and more.</p>
+							            <ul class="large-hide medium-hide">
+							            	<li class="fullwidth"><a href="https://www.uhaulinvestorsclub.com/document/download/3086/IndentureSupplement-Series1B-2B-4Band12B" target="_blank" class="link_pdf">Indenture Supplement, Series 1B, 2B, 4B and 12B</a>
+										    </li><li class="fullwidth">
+										    <a href="https://www.uhaulinvestorsclub.com/document/download/3087/PledgeandSecurityAgreement-SeriesUIC1B-2B-4Band12" target="_blank" class="link_pdf">Pledge and Security Agreement, Series UIC1B, 2B,4B and 12</a>
+										    
+										    </li><li class="fullwidth">
+										    <a href="https://www.uhaulinvestorsclub.com/document/download/3088/UIC-02BProspectusSupplement" target="_blank" class="link_pdf">UIC-02B Prospectus Supplement</a>
+										    </li>
+							            </ul>
+							            <div class="gray box">
+							            	<form>
+							            		<div class="row">
+							            			<div class="large-3 medium-3 small-12 columns">
+							            				<label>
+							            					Investment
+							            					<input value="$" type="tel">
+							            				</label>
+							            				
+							            			</div>
+							            			<div class="large-6 medium-4 small-12 columns">
+							            				<label>
+							            					<span class="large-hide">&nbsp;</span>
+							            					<input type="submit" value="Calculate Payout">
+							            				</label>
+							            				<a onclick="javscript: return schedulePopup('trancheId', 772);" href="#" class="popup medium-hide small-hide">View payment schedule</a>
+							            			</div>
+							            			<div class="large-3 medium-5 small-12 columns">
+							            			<label class="large-hide small-hide">&nbsp;</label>
+							            			<h4 class="medium-right small-4 large-12 columns">$123.45</h4>
+							            			<p class="small-8 large-12"><small><span class="medium-hide">(</span>U-Note payment after 3% after a 2 year term<span class="medium-hide">)</span><span class="large-hide small-hide">:</span></small>
+							            			<span class="large-hide small-hide"><br><a onclick="javscript: return schedulePopup('trancheId', 772);" href="#" class="popup">View payment schedule</a></span></p>
+							            			</div>
+							            		</div>
+							            	</form>
+							            	
+							            </div>
+							            <p class="large-hide small-hide">
+							                This offering
+							                UIC-02B-24
+							                is a subseries of offering
+							                UIC-02B. The total amount under all series
+							                UIC-02B
+							                is
+							                $802,800.</p>
+							            <p class="large-hide small-hide">
+							            	<small>*The closing date may be extended or shortened by us, in our discretion.  In the event the closing date is shortened, prospective investors may not have the opportunity to revoke their subscription offer, as such  subscription offer may be deemed accepted by us and final, upon the closing date.  Additionally, we may cancel the offering for any reason. Interest begins no more than 5 business days after the closing date, and will be adjusted accordingly, based upon any adjustments to the closing date. In such event, the initial payment date and the Note maturity date will also have corresponding adjustments.The definitive documents will be executed and made available to investors following the closing date.</small></p>
+							        </div>
+							    </div>
+							    <div class="row medium-hide small-hide">
+							        <div class="large-12 columns">
+							            <p>
+							                This offering
+							                UIC-02B-24
+							                is a subseries of offering
+							                UIC-02B. The total amount under all series
+							                UIC-02B
+							                is
+							                $802,800.</p>
+							            <p>
+							            	<small>*The closing date may be extended or shortened by us, in our discretion.  In the event the closing date is shortened, prospective investors may not have the opportunity to revoke their subscription offer, as such  subscription offer may be deemed accepted by us and final, upon the closing date.  Additionally, we may cancel the offering for any reason. Interest begins no more than 5 business days after the closing date, and will be adjusted accordingly, based upon any adjustments to the closing date. In such event, the initial payment date and the Note maturity date will also have corresponding adjustments.The definitive documents will be executed and made available to investors following the closing date.</small></p>
+							        </div>
+							    </div>
+			                </td>
+			            </tr>  			       
+			        </tbody>
+			    </table>
+			   
+			</div>
+		</div>
+		<div class="row">
+			<div class="columns large-2 small-12">
+				<a href="order.html" class="button">Continue >></a>
+			</div>
+		</div>
+	   </div>
+		
+	</div>
+	<footer>
+		<nav>
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li><a href="#">About Us</a></li>
+				<li><a href="#">How direct investing works</a></li>
+				<li><a href="#">Investment opportunities</a></li>
+				<li><a href="#">Frequently Asked Questions</a></li>
+				<li><a href="#">Contact Us</a></li>
+			<ul>
+		</nav>
+		<nav>
+			<ul>
+				<li><a href="#">SEC Filings</a></li>
+				<li><a href="#">Legal Documents</a></li>
+				<li><a href="#"><img src="img/facebook.png" width="16" height="16"> Follow Us</a></li>
+			</ul>
+		</nav>
+		<p class="small">
+			AMERCO has filed a registration statement (including a prospectus) with the U.S. Securities and Exchange Commission (SEC) for the offering to which this communication relates. Before you invest, you should read the prospectus in that registration statement and other documents the issuer has filed with the SEC for more complete information about AMERCO and this offering. You may get these documents for free by visiting EDGAR on the SEC Web site at www.sec.gov or under the Investment Opportunities/View Full Details pages of this website.
+		</p>
+		<p class="small">
+			* Effective September 16, 2013. Per bankofamerica.com, bankrate.com, ing.com, and treasury.gov. Provided for comparison purposes only. Actual rates may vary. <span class="nowrap"><span class="nobreak">U-Haul</span></span> Investors Club&reg; is not responsible for nor does it guarantee accuracy of rates posted. U-Notes&reg; are not FDIC insured.
+
+
+		</p>
+		<p>
+			&copy; 2013 <span class="nowrap"><span class="nobreak">U-Haul</span></span> Investor's Club&reg;. All Rights Reserved.
+		</p>
+		<p>Patent Pending | Version 1.9.20059 (Release)
+	</footer>
+</body>
+</html>
